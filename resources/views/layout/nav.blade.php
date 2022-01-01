@@ -1,7 +1,15 @@
 <nav id="sidebar">
     <div class="p-4 pt-5">
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
+        <p class="centr-name-user">Користувач<p>
         <ul class="list-unstyled components mb-5">
+
+            <li>
+                <a  href="#">Вхід</a>
+            </li>
+            <li >
+                <a href="\reg">Реєстрація</a>
+            </li>
             <li>
                 <a href="#">Збережені</a>
             </li>

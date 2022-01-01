@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/reg', function (){
+    return view('registration');
+});
+Route::post('/new_user', function (){
+    return dd(Request::all());
+})->name('registration');
