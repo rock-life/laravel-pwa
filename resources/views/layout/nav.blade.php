@@ -5,7 +5,7 @@
         <ul class="list-unstyled components mb-5">
 
             <li>
-                <a  href="#">Вхід</a>
+                <a  href="{{route('sign_in')}}">Вхід</a>
             </li>
             <li >
                 <a href="\reg">Реєстрація</a>

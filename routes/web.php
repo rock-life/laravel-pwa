@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/reg', function (){
-    return view('registration');
-});
+Route::get('/reg', 'UserController@registrationNewUser');
+
 Route::post('/new_user', function (){
     return dd(Request::all());
 })->name('registration');
+Route::get('/sing_in', function (){
+    return view('sign_in');
+})->name('sign_in');
+Route::post('/sign_in_to_account', function (){
+    return bb(Request::all());
+})->name('sign_in_to_account');
