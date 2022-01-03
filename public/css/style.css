@@ -449,8 +449,7 @@ pre {
 .container {
   width: 100%;
     background-color: rgba(0, 0, 0, 0.34);
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 576px) {

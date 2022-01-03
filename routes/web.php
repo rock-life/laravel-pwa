@@ -13,17 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/reg', 'UserController@registrationNewUser');
+Route::get('/', [\App\Http\Controllers\MainController::class , 'toHome'])->name('home');
 
-Route::post('/new_user', function (){
-    return dd(Request::all());
-})->name('registration');
-Route::get('/sing_in', function (){
-    return view('sign_in');
-})->name('sign_in');
+Route::get('/reg', [\App\Http\Controllers\UserController::class, 'registrationNewUser'])->name('to_form_registration');
+
+Route::post('/new_user', [\App\Http\Controllers\UserController::class, 'validateRegistrationNewUser'])->name('registration');
+
+
+Route::get('/sing_in', [\App\Http\Controllers\UserController::class, 'sidnInUser'])->name('sign_in');
+
 Route::post('/sign_in_to_account', function (){
     return bb(Request::all());
 })->name('sign_in_to_account');

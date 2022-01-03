@@ -8,7 +8,7 @@
                 <a  href="{{route('sign_in')}}">Вхід</a>
             </li>
             <li >
-                <a href="\reg">Реєстрація</a>
+                <a href="{{route('to_form_registration')}}">Реєстрація</a>
             </li>
             <li>
                 <a href="#">Збережені</a>
