@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\MainController::class , 'toHome'])->name('home');
+Route::get('/', [\App\Http\Controllers\Controller::class , 'toHome'])->name('home');
 
 Route::get('/reg', [\App\Http\Controllers\UserController::class, 'registrationNewUser'])->name('to_form_registration');
 
