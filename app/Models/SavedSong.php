@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SaveSongModel extends Model
+class SavedSong extends Model
 {
 public $timestamps=false;
 
-protected $table='save_song_models';
+protected $table='saved_song';
     public function user(){
-        return $this->belongsTo('App\Models\UsersModel');
+        return $this->belongsTo('App\Models\Users');
     }
     public function songs(){
-        return $this->belongsTo('App\Models\SongsModel');
+        return $this->belongsTo('App\Models\Songs');
     }
 
 }

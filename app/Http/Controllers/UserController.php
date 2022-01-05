@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UsersModel;
+use App\Models\Users;
 use App\Repository\UsersRepository;
 use Illuminate\Http\Request;
 
@@ -10,7 +10,7 @@ class
 UserController extends Controller
 {
     protected $model;
-    public function __construct(UsersModel $usersModel){
+    public function __construct(Users $usersModel){
         $this->model=new UsersRepository($usersModel);
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Models\UsersModel;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -11,7 +11,7 @@ class UsersRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $users;
 
-    public function __construct(UsersModel $model){
+    public function __construct(Users $model){
         $this->users=$model;
     }
 

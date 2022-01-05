@@ -13,13 +13,13 @@ class CreateSongsModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('songs_models', function (Blueprint $table) {
+        Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
-        Schema::table('songs_models', function (Blueprint $table){
-            $table->foreignId('id_artist')->constrained('artist_models');
-            $table->foreignId('id_genre')->constrained('genre_models');
+        Schema::table('songs', function (Blueprint $table){
+            $table->foreignId('id_artist')->constrained('artist');
+            $table->foreignId('id_genre')->constrained('genre');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateSongsModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('songs_models');
+        Schema::dropIfExists('songs');
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
-use App\Models\ArtistModel;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 
 class ArtistRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $artist;
 
-    public function __constructor(ArtistModel $model){
+    public function __constructor(Artist $model){
         $this->artist=$model;
     }
 

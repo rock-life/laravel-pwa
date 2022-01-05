@@ -13,7 +13,7 @@ class CreateGenreModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('genre_models', function (Blueprint $table) {
+        Schema::create('genre', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
@@ -26,6 +26,6 @@ class CreateGenreModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genre_models');
+        Schema::dropIfExists('genre');
     }
 }

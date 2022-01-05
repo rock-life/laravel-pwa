@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\ArtistModel;
-use App\Models\SaveSongModel;
+use App\Models\Artist;
+use App\Models\SavedSong;
 use Illuminate\Http\Request;
 
 class SaveSongRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $SS;
 
-    public function __constructor(SaveSongModel $model){
+    public function __constructor(SavedSong $model){
         $this->SS=$model;
     }
 
