@@ -16,16 +16,35 @@ UserController extends Controller
 
     public function registrationNewUser()
     {
-        return view('registration');
+        if(session('is_sign_in')==false)
+            return view('registration');
+        else
+            return view('home');
+    }
+
+    public function ExitUser (){
+        session(['is_sign_in'=>false]);
+        return view('home');
     }
 
     public function validateRegistrationNewUser(Request $request){
-            $this->model->saveNewUser($request);
-            return redirect()->route('sign_in');
+                $this->model->saveNewUser($request);
+                return redirect()->route('sign_in');
+    }
+    public function validateSignInUser(Request $request){
+        if(session('is_sign_in')==false) {
+            $this->model->signIn($request);
+            return redirect()->route('home');
+        }
+        else
+            return redirect()->route('home');
     }
 
     public function sidnInUser()
     {
-        return view('sign_in');
+        if(session('is_sign_in')==false)
+            return view('sign_in');
+        else
+            return view('home');
     }
 }

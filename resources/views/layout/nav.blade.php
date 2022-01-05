@@ -1,9 +1,13 @@
+
 <nav id="sidebar">
     <div class="p-4 pt-5">
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
         <p class="centr-name-user">Користувач<p>
         <ul class="list-unstyled components mb-5">
-
+            @if(session()->has('is_sign_in')==false)
+                <?php session(['is_sign_in'=>false]); ?>
+            @endif
+            @if(session('is_sign_in')==false )
             <li>
                 <a  href="{{route('sign_in')}}">Вхід</a>
             </li>
@@ -11,6 +15,7 @@
                 <a href="{{route('to_form_registration')}}">Реєстрація</a>
             </li>
             <li>
+                @elseif(session('is_sign_in')==true)
                 <a href="#">Збережені</a>
             </li>
             <li >
@@ -22,6 +27,10 @@
             <li>
                 <a href="#">Відповіді</a>
             </li>
+                    <li>
+                        <a href="{{'exit'}}">Exit</a>
+                    </li>
+            @endif
         </ul>
 
         <div class="footer">

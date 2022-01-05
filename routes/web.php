@@ -22,6 +22,6 @@ Route::post('/new_user', [\App\Http\Controllers\UserController::class, 'validate
 
 Route::get('/sing_in', [\App\Http\Controllers\UserController::class, 'sidnInUser'])->name('sign_in');
 
-Route::post('/sign_in_to_account', function (){
-    return bb(Request::all());
-})->name('sign_in_to_account');
+Route::post('/sign', [\App\Http\Controllers\UserController::class, 'validateSignInUser'])->name('sign_in_to_account');
+
+Route::get('exit', [\App\Http\Controllers\UserController::class, 'ExitUser'])->name('exit');

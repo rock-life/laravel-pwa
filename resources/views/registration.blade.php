@@ -4,7 +4,7 @@
 
 
     <div class="container">
-        @error("login.exists")
+        @error("login")
             <div class="alert alert-danger">
                 {{$message}}
             </div>
