@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\ArtistModel;
-use App\Models\SongVariantModel;
+use App\Models\Artist;
+use App\Models\SongVariant;
 use Illuminate\Http\Request;
 
 class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $SV;
 
-    public function __constructor(SongVariantModel $model){
+    public function __constructor(SongVariant $model){
         $this->SV=$model;
     }
 

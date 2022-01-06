@@ -5,7 +5,12 @@
 
     <div class="container">
 
-    <form action="{{route('registration')}}" class="row g-3"  method="post" enctype="multipart/form-data">
+        @error("login")
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+        @enderror
+    <form action="{{route('register.perform')}}" class="row g-3"  method="post" enctype="multipart/form-data">
         @csrf
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Логін</label>
@@ -23,6 +28,8 @@
             @error('email')
             <span class="text-danger">{{$message}}</span>
             @enderror
+
+
         </div>
 
         <div class="col-md-6">

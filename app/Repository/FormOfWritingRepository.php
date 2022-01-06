@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\ArtistModel;
-use App\Models\FormOfWritingModel;
+use App\Models\Artist;
+use App\Models\FormOfWriting;
 use Illuminate\Http\Request;
 
 class FormOfWritingRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $FOW;
 
-    public function __constructor(FormOfWritingModel $model){
+    public function __constructor(FormOfWriting $model){
         $this->FOW=$model;
     }
 

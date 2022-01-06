@@ -13,12 +13,18 @@ class CreateUsersModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_models', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('login');
             $table->string('password');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
+            $table->rememberToken();
+            $table->string('logo_url')->nullable();
+        });
+        Schema::table('users', function (Blueprint $table){
+            $table->foreignId('id_role')->constrained('roles');
         });
     }
 
@@ -29,6 +35,6 @@ class CreateUsersModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_models');
+        Schema::dropIfExists('users');
     }
 }

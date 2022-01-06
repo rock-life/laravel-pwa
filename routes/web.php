@@ -12,16 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['namespace'=>'App\Http\Controllers'], function ()
+{
+    Route::get('/',[\App\Http\Controllers\Controller::class, 'toHome'])->name('toHome');
 
-Route::get('/', [\App\Http\Controllers\Controller::class , 'toHome'])->name('home');
+    Route::group(['middleware' =>['guest']], function (){
+        Route::get('/register',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
+        Route::post('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');
 
-Route::get('/reg', [\App\Http\Controllers\UserController::class, 'registrationNewUser'])->name('to_form_registration');
+        Route::get('/login',[\App\Http\Controllers\UserController::class, 'showLoginForm'])->name('login.show');
+        Route::post('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login.perform');
+    });
 
-Route::post('/new_user', [\App\Http\Controllers\UserController::class, 'validateRegistrationNewUser'])->name('registration');
+    Route::group(['middleware'=>['auth']], function (){
+        Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout']);
+    });
 
-
-Route::get('/sing_in', [\App\Http\Controllers\UserController::class, 'sidnInUser'])->name('sign_in');
-
-Route::post('/sign_in_to_account', function (){
-    return bb(Request::all());
-})->name('sign_in_to_account');
+});

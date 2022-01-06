@@ -1,15 +1,19 @@
+
 <nav id="sidebar">
     <div class="p-4 pt-5">
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
         <p class="centr-name-user">Користувач<p>
         <ul class="list-unstyled components mb-5">
-
+            @guest()
             <li>
-                <a  href="{{route('sign_in')}}">Вхід</a>
+                <a  href="{{route('login.show')}}">Вхід</a>
             </li>
             <li >
-                <a href="{{route('to_form_registration')}}">Реєстрація</a>
+                <a href="{{route('register.show')}}">Реєстрація</a>
             </li>
+            @endguest
+            @auth()
+                {{auth()->user()->name}}
             <li>
                 <a href="#">Збережені</a>
             </li>
@@ -22,6 +26,10 @@
             <li>
                 <a href="#">Відповіді</a>
             </li>
+                    <li>
+                        <a href="{{'logout'}}">Вихід</a>
+                    </li>
+                @endauth
         </ul>
 
         <div class="footer">

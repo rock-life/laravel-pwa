@@ -13,7 +13,7 @@ class CreateFormOfWritingModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_of_writing_models', function (Blueprint $table) {
+        Schema::create('form_of_writing', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
@@ -26,6 +26,6 @@ class CreateFormOfWritingModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_of_writing_models');
+        Schema::dropIfExists('form_of_writing');
     }
 }

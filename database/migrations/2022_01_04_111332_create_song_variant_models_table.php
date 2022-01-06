@@ -13,17 +13,18 @@ class CreateSongVariantModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('song_variant_models', function (Blueprint $table) {
+
+        Schema::create('song_variant', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->longText('text');
             $table->string('image');
             $table->boolean('visibility');
         });
-        Schema::table('song_variant_models', function (Blueprint $table){
-           $table->foreignId('id_song') ->constrained('songs_models');
-           $table->foreignId('id_form_of_writing')->constrained('form_of_writing_models');
-           $table->foreignId('id_user')->constrained('users_models');
+        Schema::table('song_variant', function (Blueprint $table){
+           $table->foreignId('id_song') ->constrained('songs');
+           $table->foreignId('id_form_of_writing')->constrained('form_of_writing');
+           $table->foreignId('id_user')->constrained('users');
         });
     }
 
@@ -34,6 +35,6 @@ class CreateSongVariantModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('song_variant_models');
+        Schema::dropIfExists('song_variant');
     }
 }

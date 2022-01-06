@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\ArtistModel;
-use App\Models\GenreModel;
+use App\Models\Artist;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreRepository implements \Dotenv\Repository\RepositoryInterface
 {
     protected $genre;
 
-    public function __constructor(GenreModel $model){
+    public function __constructor(Genre $model){
         $this->genre=$model;
     }
 

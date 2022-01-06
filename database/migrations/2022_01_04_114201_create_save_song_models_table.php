@@ -13,9 +13,9 @@ class CreateSaveSongModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('save_song_models', function (Blueprint $table) {
-            $table->foreignId('id_user')->constrained('users_models');
-            $table->foreignId('id_song')->constrained('songs_models');
+        Schema::create('saved_song', function (Blueprint $table) {
+            $table->foreignId('id_user')->constrained('users');
+            $table->foreignId('id_song')->constrained('songs');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSaveSongModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('save_song_models');
+        Schema::dropIfExists('saved_song');
     }
 }
