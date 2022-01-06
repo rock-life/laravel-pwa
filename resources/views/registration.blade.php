@@ -4,11 +4,7 @@
 
 
     <div class="container">
-        @error("login.exists")
-            <div class="alert alert-danger">
-                {{$message}}
-            </div>
-        @enderror
+
     <form action="{{route('registration')}}" class="row g-3"  method="post" enctype="multipart/form-data">
         @csrf
         <div class="col-md-6">
