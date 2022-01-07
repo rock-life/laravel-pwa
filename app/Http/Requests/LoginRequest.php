@@ -69,7 +69,7 @@ class LoginRequest extends FormRequest
         return ! $factory->make(
             ['login'=>$param],
             ['login'=>'email']
-        )->fail();
+        )->fails();
     }
 
 

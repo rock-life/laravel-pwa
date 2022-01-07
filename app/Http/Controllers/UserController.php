@@ -6,13 +6,13 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Users;
 use App\Repository\UsersRepository;
+use App\Services\Login\RememberMeExpiration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
 
-class
-UserController extends Controller
+class UserController extends Controller
 {
     protected $model;
     public function __construct(Users $usersModel){
@@ -28,35 +28,20 @@ UserController extends Controller
     }
 
     public function login(LoginRequest $request){
-        $credentials=$request->getCredentials();
-
-        if(!Auth::validate($credentials)):
-            return redirect()->to('sign_in')->withErrors(trans('auth.failed'));
-        endif;
-
-        $user=Auth::getProvider()->retrieveByCredentials($credentials);
-
-        Auth::login($user);
-
-        return $this->authenticated($request, $user);
-
+        $request->validate();
     }
 
-    public function register(RegisterRequest $request){
-        $user=Users::create($request->validated());
-        auth()->login($user);
-        return redirect('/');
+    public function registration(RegisterRequest  $request){
+        $request->validate();
+        $date=$request->all();
+        Users::create($date);
+        return redirect('toHome');
     }
 
-    public function authenticated (){
-        return redirect()->intended();
-    }
-
-
-    public function logout(){
+    public function Logout(){
         Session::flush();
         Auth::logout();
-        return redirect('sign_in');
+        return redirect('toHome');
     }
 
 }

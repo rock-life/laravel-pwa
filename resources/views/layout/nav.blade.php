@@ -4,6 +4,7 @@
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
         <p class="centr-name-user">Користувач<p>
         <ul class="list-unstyled components mb-5">
+            <?=var_dump(\Illuminate\Support\Facades\Auth::check()) ?>
             @guest()
             <li>
                 <a  href="{{route('login.show')}}">Вхід</a>
@@ -11,9 +12,8 @@
             <li >
                 <a href="{{route('register.show')}}">Реєстрація</a>
             </li>
-            @endguest
-            @auth()
-                {{auth()->user()->name}}
+                @endguest
+                @auth()
             <li>
                 <a href="#">Збережені</a>
             </li>
