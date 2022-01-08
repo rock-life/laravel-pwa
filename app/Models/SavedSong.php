@@ -11,7 +11,7 @@ public $timestamps=false;
 
 protected $table='saved_song';
     public function user(){
-        return $this->belongsTo('App\Models\Users');
+        return $this->belongsTo('App\Models\User');
     }
     public function songs(){
         return $this->belongsTo('App\Models\Songs');

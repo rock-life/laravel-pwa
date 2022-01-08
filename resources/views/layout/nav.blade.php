@@ -4,16 +4,16 @@
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
         <p class="centr-name-user">Користувач<p>
         <ul class="list-unstyled components mb-5">
-            <?=var_dump(\Illuminate\Support\Facades\Auth::check()) ?>
             @guest()
             <li>
-                <a  href="{{route('login.show')}}">Вхід</a>
+                <a  href="{{route('login')}}">Вхід</a>
             </li>
             <li >
                 <a href="{{route('register.show')}}">Реєстрація</a>
             </li>
                 @endguest
                 @auth()
+
             <li>
                 <a href="#">Збережені</a>
             </li>
@@ -57,7 +57,12 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    @can('admin_panel',App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Панель адміністратора</a>
+                        </li>
+                    @endcan
+                    <li  class="nav-item active">
                         <a class="nav-link" href="#">Головна</a>
                     </li>
                     <li class="nav-item">

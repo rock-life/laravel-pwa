@@ -15,6 +15,6 @@ class SongVariant extends Model
         return $this->belongsTo('App\Models\FormOfWriting');
     }
     public function user (){
-        return $this->belongsTo('App\Models\Users');
+        return $this->belongsTo('App\Models\User');
     }
 }

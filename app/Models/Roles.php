@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Roles extends Model
 {
-    protected $table ='roles';
+    use HasFactory;
+
+    protected $table = 'roles';
+
+    protected $fillable = [
+        'name'
+    ];
+
     public function users(){
-        return $this->hasMany('App\Models\Users');
+        return $this->hasMany('App\Models\User');
     }
+
 }

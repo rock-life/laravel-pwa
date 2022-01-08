@@ -24,7 +24,7 @@ class CreateUsersModelsTable extends Migration
             $table->string('logo_url')->nullable();
         });
         Schema::table('users', function (Blueprint $table){
-            $table->foreignId('id_role')->constrained('roles');
+            $table->foreignId('id_role')->default('0')->constrained('roles');
         });
     }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Models\Users;
+use App\Models\User;
 use App\Repository\UsersRepository;
 use App\Services\Login\RememberMeExpiration;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use phpDocumentor\Reflection\Types\This;
 class UserController extends Controller
 {
     protected $model;
-    public function __construct(Users $usersModel){
+    public function __construct(User $usersModel){
         $this->model=new UsersRepository($usersModel);
     }
 
@@ -27,21 +27,52 @@ class UserController extends Controller
         return view('sign_in');
     }
 
-    public function login(LoginRequest $request){
-        $request->validate();
-    }
 
-    public function registration(RegisterRequest  $request){
-        $request->validate();
-        $date=$request->all();
-        Users::create($date);
-        return redirect('toHome');
+
+    public function register(RegisterRequest $request)
+    {
+        $user = User::create($request->validated());
+
+        return redirect('login')->with('success', "Акаунт створено, будь-ласка увійдіть.");
     }
 
     public function Logout(){
         Session::flush();
         Auth::logout();
-        return redirect('toHome');
+        return redirect('/');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->getCredentials();
+
+        if(!Auth::validate($credentials)):
+            return redirect()->to('login')
+                ->withErrors(trans('auth.failed'));
+        endif;
+
+        $user = Auth::getProvider()->retrieveByCredentials($credentials);
+
+        Auth::login($user, $request->get('remember'));
+
+        if($request->get('remember')):
+            $this->setRememberMeExpiration($user);
+        endif;
+
+        return $this->authenticated($request, $user);
+    }
+
+    /**
+     * Handle response after user authenticated
+     *
+     * @param Request $request
+     * @param Auth $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect()->intended();
     }
 
 }

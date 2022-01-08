@@ -1,6 +1,14 @@
 @extends('layout.header')
 @section('content')
 <div class="container">
+
+    @if(Session::get('success'))
+        <?php $data = Session::get('success'); ?>
+        <div class="alert alert-success">
+                <p class="text-center">{{$data}}</p>
+        </div>
+    @endif
+
     <form method="post" action="{{route('login.perform')}}">
         @csrf
         <div class="row mb-3">
