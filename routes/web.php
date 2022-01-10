@@ -29,7 +29,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
 
     Route::group(['middleware'=>['auth']], function (){
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
-        Route::middleware(['admin'])->group(function (){
+        Route::middleware(['role:administrator'])->group(function (){
             Route::any('/AminPanel', function (){
                 return view('admin_panel.home');})->name('admin_panel');
         });

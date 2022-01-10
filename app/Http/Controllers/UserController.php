@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use App\Repository\UsersRepository;
 use App\Services\Login\RememberMeExpiration;
+use Couchbase\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -52,7 +53,6 @@ class UserController extends Controller
         endif;
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
-
         Auth::login($user, $request->get('remember'));
 
         if($request->get('remember')):

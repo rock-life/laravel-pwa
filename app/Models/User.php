@@ -12,6 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function hasRole($role){
+        if($this->roles()->where('name',$role)->first())
+            return true;
+        else
+            return false;
+    }
     /**
      * The database table used by the model.
      *
@@ -20,7 +26,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     public function roles(){
-        return $this->belongsTo('App\Models\Roles');
+        return $this->belongsTo(Roles::class);
     }
 
     /**

@@ -15,9 +15,9 @@ class IfNotAdministrator
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $role)
     {
-        if($request->user()->id_role!=DB::table('roles')->select('id')->where('name','administrator')->get()->first()->id)
+        if($request->user()->hasRole($role)==false)
             return redirect('/');
         return $next($request);
     }

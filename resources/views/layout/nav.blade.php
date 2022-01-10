@@ -2,7 +2,6 @@
 <nav id="sidebar">
     <div class="p-4 pt-5">
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
-        <p class="centr-name-user">{{auth()->user()->login}}<p>
         <ul class="list-unstyled components mb-5">
             @guest()
             <li>
@@ -23,7 +22,7 @@
                 <a href="#">{{__('menu_items.my_song_book')}}</a>
             </li>
                     <li>
-                        <a href="{{'logout'}}">{{__('menu_items,logout')}}</a>
+                        <a href="{{'logout'}}">{{__('menu_items.logout')}}</a>
                     </li>
                 @endauth
         </ul>
