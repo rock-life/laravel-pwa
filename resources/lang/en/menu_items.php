@@ -1,0 +1,22 @@
+<?php
+return [
+    'home_site'=>'Go to site',
+    'role_management'=>'Role management',
+    'users_management'=>'Users management',
+    'application_for_publication'=>'Application for publication',
+    'songs_management'=>'Songs management',
+    'logout'=>'Logout',
+    'sign_in'=>'Sign in',
+    'register'=>'Sign  up',
+    'saved_songs'=>'Saved songs',
+    'add_song'=>'Add song',
+    'my_song_book'=>'My added songs',
+    'admin_panel'=>'Admin panel',
+    'home'=>'Home',
+    'new_song'=>'New song',
+    'popular_songs'=>'Popular songs',
+    'artists'=>'Artists',
+    'all_songs'=>'All songs',
+    'category'=>'Category',
+    'search'=>'Search',
+];

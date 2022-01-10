@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['namespace'=>'App\Http\Controllers'], function ()
+
+Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], function ()
 {
     Route::get('/',[\App\Http\Controllers\Controller::class, 'toHome'])->name('toHome');
+    Route::get('/edit_lang',[\App\Http\Controllers\Controller::class, 'editLang']);
 
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/register',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
@@ -28,8 +31,9 @@ Route::group(['namespace'=>'App\Http\Controllers'], function ()
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
         Route::middleware(['admin'])->group(function (){
             Route::any('/AminPanel', function (){
-                return 'is Admin panel';})->name('admin_panel');
+                return view('admin_panel.home');})->name('admin_panel');
         });
     });
+
 
 });

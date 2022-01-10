@@ -2,32 +2,28 @@
 <nav id="sidebar">
     <div class="p-4 pt-5">
         <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
-        <p class="centr-name-user">Користувач<p>
+        <p class="centr-name-user">{{auth()->user()->login}}<p>
         <ul class="list-unstyled components mb-5">
             @guest()
             <li>
-                <a  href="{{route('login')}}">Вхід</a>
+                <a  href="{{route('login')}}">{{__('menu_items.sign_in')}}</a>
             </li>
             <li >
-                <a href="{{route('register.show')}}">Реєстрація</a>
+                <a href="{{route('register.show')}}">{{__('menu_items.register')}}</a>
             </li>
                 @endguest
                 @auth()
-
             <li>
-                <a href="#">Збережені</a>
+                <a href="#">{{__('menu_items.saved_songs')}}</a>
             </li>
             <li >
-                <a href="#h">Додати розбір</a>
+                <a href="#">{{__('menu_items.add_song')}}</a>
             </li>
             <li>
-                <a href="#">Мої додані</a>
-            </li>
-            <li>
-                <a href="#">Відповіді</a>
+                <a href="#">{{__('menu_items.my_song_book')}}</a>
             </li>
                     <li>
-                        <a href="{{'logout'}}">Вихід</a>
+                        <a href="{{'logout'}}">{{__('menu_items,logout')}}</a>
                     </li>
                 @endauth
         </ul>
@@ -59,31 +55,34 @@
                 <ul class="nav navbar-nav ml-auto">
                     @can('admin_panel',App\Models\User::class)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin_panel')}}">Панель адміністратора</a>
+                            <a class="nav-link" href="{{route('admin_panel')}}">{{__('menu_items.admin_panel')}}</a>
                         </li>
                     @endcan
                     <li  class="nav-item active">
-                        <a class="nav-link" href="#">Головна</a>
+                        <a class="nav-link" href="#">{{__('menu_items.home')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Новинки</a>
+                        <a class="nav-link" href="#">{{__('menu_items.new_song')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Популярні</a>
+                        <a class="nav-link" href="#">{{__('menu_items.popular_songs')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Виконавці</a>
+                        <a class="nav-link" href="#">{{__('menu_items.artists')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Усі пісні</a>
+                        <a class="nav-link" href="#">{{__('menu_items.all_songs')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Категорії</a>
+                        <a class="nav-link" href="#">{{__('menu_items.category')}}</a>
                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="edit_lang">edit lang</a>
+                        </li>
                     <li>
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success" type="submit">{{__('menu_items.search')}}</button>
                         </form>
                     </li>
                 </ul>

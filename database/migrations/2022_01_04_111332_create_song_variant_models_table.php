@@ -18,8 +18,9 @@ class CreateSongVariantModelsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->longText('text');
-            $table->string('image');
-            $table->boolean('visibility');
+            $table->boolean('visibility')->default('0');
+            $table->text('video_of_song')->nullable();
+            $table->text('video_lesson')->nullable();
         });
         Schema::table('song_variant', function (Blueprint $table){
            $table->foreignId('id_song') ->constrained('songs');
