@@ -28,7 +28,7 @@ Route::group(['namespace'=>'App\Http\Controllers'], function ()
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
         Route::middleware(['admin'])->group(function (){
             Route::any('/AminPanel', function (){
-                return 'is Admin panel';});
+                return 'is Admin panel';})->name('admin_panel');
         });
     });
 

@@ -16,7 +16,7 @@ class IfNotAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user()->id_role!=1)
+        if($request->user()->id_role!=3)
             return redirect('/');
         return $next($request);
     }

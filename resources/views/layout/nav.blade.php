@@ -59,7 +59,7 @@
                 <ul class="nav navbar-nav ml-auto">
                     @can('admin_panel',App\Models\User::class)
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Панель адміністратора</a>
+                            <a class="nav-link" href="{{route('admin_panel')}}">Панель адміністратора</a>
                         </li>
                     @endcan
                     <li  class="nav-item active">

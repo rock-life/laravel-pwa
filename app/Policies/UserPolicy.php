@@ -20,7 +20,7 @@ class UserPolicy
     }
 
     public function admin_panel(User $user){
-        if($user->id_role==1)
+        if($user->id_role==3)
             return true;
         else
             return false;
