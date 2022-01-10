@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IfNotAdministrator
 {
@@ -16,7 +17,7 @@ class IfNotAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user()->id_role!=3)
+        if($request->user()->id_role!=DB::table('roles')->select('id')->where('name','administrator')->get()->first()->id)
             return redirect('/');
         return $next($request);
     }

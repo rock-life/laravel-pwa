@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\DB;
 
 class UserPolicy
 {
@@ -20,7 +21,7 @@ class UserPolicy
     }
 
     public function admin_panel(User $user){
-        if($user->id_role==3)
+        if($user->id_role==DB::table('roles')->select('id')->where('name','administrator')->get()->first()->id)
             return true;
         else
             return false;
