@@ -17,7 +17,7 @@ class Lang
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('lang')=='uk')
+        if(session()->has('lang'))
             App::setLocale(session()->get('lang'));
         return $next($request);
     }

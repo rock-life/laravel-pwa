@@ -5,10 +5,10 @@
         <ul class="list-unstyled components mb-5">
             @guest()
             <li>
-                <a  href="{{route('login')}}">{{__('menu_items.sign_in')}}</a>
+                <a  href="{{route('login',['en'])}}">{{__('menu_items.sign_in')}}</a>
             </li>
             <li >
-                <a href="{{route('register.show')}}">{{__('menu_items.register')}}</a>
+                <a href="{{route('register.show',['en'])}}">{{__('menu_items.register')}}</a>
             </li>
                 @endguest
                 @auth()
@@ -76,7 +76,13 @@
                         <a class="nav-link" href="#">{{__('menu_items.category')}}</a>
                     </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="edit_lang">edit lang</a>
+                            <span class='text-light navbar-text'>{{__('menu_items.lang')}}</span>
+                        </li>
+                        <li class="nav-item mt-2">
+                           <select name="lang" class="form-select mr-3">
+                               <option value="en">{{__('menu_items.en')}}</option>
+                              <option value="uk">{{__('menu_items.uk')}}</option>
+                           </select>
                         </li>
                     <li>
                         <form class="d-flex">

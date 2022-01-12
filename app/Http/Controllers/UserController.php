@@ -9,6 +9,7 @@ use App\Repository\UsersRepository;
 use App\Services\Login\RememberMeExpiration;
 use Couchbase\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
@@ -20,11 +21,13 @@ class UserController extends Controller
         $this->model=new UsersRepository($usersModel);
     }
 
-    public function showRegisterForm(){
+    public function showRegisterForm($locale){
+        App::setLocale($locale);
         return view('registration');
     }
 
-    public function showLoginForm(){
+    public function showLoginForm($locale){
+            App::setLocale($locale);
         return view('sign_in');
     }
 
@@ -45,9 +48,10 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
+
         $credentials = $request->getCredentials();
 
-        if(!Auth::validate($credentials)):
+            if(!Auth::validate($credentials)):
             return redirect()->to('login')
                 ->withErrors(trans('auth.failed'));
         endif;

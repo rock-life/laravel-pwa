@@ -26,7 +26,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     public function roles(){
-        return $this->belongsTo(Roles::class);
+        return $this->belongsTo(Roles::class,'id_role');
     }
 
     /**

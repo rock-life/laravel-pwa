@@ -15,14 +15,4 @@ class Controller extends BaseController
 
         return view('home');
     }
-    public function editLang(){
-        if(session()->has('lang') && session()->get('lang')=='en')
-        session()->put(['lang'=>'uk']);
-        else if(session()->has('lang') && session()->get('lang')=='uk')
-            session()->put(['lang'=>'en']);
-        else
-            session()->put(['lang'=>'uk']);
-        App::setLocale(session()->get('lang'));
-        return view('home');
-    }
 }

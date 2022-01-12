@@ -20,11 +20,11 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/edit_lang',[\App\Http\Controllers\Controller::class, 'editLang']);
 
     Route::group(['middleware' =>['guest']], function (){
-        Route::get('/register',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
-        Route::post('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');
+        Route::get('/register/{locale}',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
+        Route::any('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');
 
-        Route::get('/login',[\App\Http\Controllers\UserController::class, 'showLoginForm'])->name('login');
-        Route::post('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login.perform');
+        Route::get('/login/{locale}',[\App\Http\Controllers\UserController::class, 'showLoginForm'])->name('login');
+        Route::any('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login.perform');
     });
 
     Route::group(['middleware'=>['auth']], function (){

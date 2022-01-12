@@ -19,4 +19,7 @@ return [
     'all_songs'=>'All songs',
     'category'=>'Category',
     'search'=>'Search',
+    'lang'=>'Language:',
+    'uk'=>'Ukrainian',
+    'en'=>'English'
 ];
