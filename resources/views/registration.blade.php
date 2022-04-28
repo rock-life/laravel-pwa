@@ -13,7 +13,7 @@
     <form action="{{route('register.perform')}}" class="row g-3"  method="post" enctype="multipart/form-data">
         @csrf
         <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Логін</label>
+            <label for="inputPassword4" class="form-label">Login</label>
             <input type="text" class="form-control" name="login" id="inputLogin">
 
             @error('login')
@@ -33,7 +33,7 @@
         </div>
 
         <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Пароль</label>
+            <label for="inputPassword4" class="form-label">Password</label>
             <input type="password" class="form-control" name="password" id="inputPassword">
 
             @error('password')
@@ -43,7 +43,7 @@
         </div>
 
         <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Повторіть пароль</label>
+            <label for="inputPassword4" class="form-label">Repeat password</label>
             <input type="password" class="form-control" name="repeat_password" id="inputRepeatPassword">
 
             @error('repeat_password')
@@ -53,7 +53,7 @@
         </div>
 
         <div class="col-md-6">
-            <label for="formFile" class="form-label">Аватарка (Не обов'язково)</label>
+            <label for="formFile" class="form-label">Icon (Optional)</label>
             <input class="form-control" type="file" name="user_photo" id="AvatarFile">
 
             @error('user_photo')
@@ -62,7 +62,7 @@
 
         </div>
         <div class="col-12">
-            <button id="Button-registration" type="submit" class="btn btn-primary">Реєстрація</button>
+            <button id="Button-registration" type="submit" class="btn btn-primary">Sign in</button>
         </div>
     </form>
     </div>
