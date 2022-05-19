@@ -5,32 +5,37 @@
         <ul class="list-unstyled components mb-5">
             @guest()
             <li>
-                <a  href="{{route('login',['uk'])}}">{{__('menu_items.sign_in')}}</a>
+                <a  href="{{route('login')}}">Вхід</a>
             </li>
             <li >
-                <a href="{{route('register.show',['uk'])}}">{{__('menu_items.register')}}</a>
+                <a href="{{route('register.show')}}">Реєстрація</a>
             </li>
-                @endguest
-                @auth()
+            @endguest
+            @auth()
             <li>
-                <a href="#">{{__('menu_items.saved_songs')}}</a>
-            </li>
-            <li >
-                <a href="#">{{__('menu_items.add_song')}}</a>
+                <a href="#">Збереженні</a>
             </li>
             <li>
-                <a href="#">{{__('menu_items.my_song_book')}}</a>
+                <a href="#">Мої додані</a>
             </li>
-                    <li>
-                        <a href="{{'logout'}}">{{__('menu_items.logout')}}</a>
-                    </li>
-                @endauth
+            <li>
+                <a href="{{'logout'}}">Вихід</a>
+            </li>
+        @endauth
+        @can('admin_panel',App\Models\User::class)
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin_panel')}}">{{__('Заявки на публікацію')}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
+            </li>
+        @endcan
         </ul>
 
         <div class="footer">
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            <p>
+                ©<script>document.write(new Date().getFullYear());</script> site.com All rights reserved
+            </p>
         </div>
 
     </div>
@@ -53,32 +58,30 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
                     @can('admin_panel',App\Models\User::class)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin_panel')}}">{{__('menu_items.admin_panel')}}</a>
-                        </li>
+
                     @endcan
                     <li  class="nav-item active">
-                        <a class="nav-link" href="{{route('toHome')}}">{{__('menu_items.home')}}</a>
+                        <a class="nav-link" href="{{route('toHome')}}">Головна</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{__('menu_items.new_song')}}</a>
+                        <a class="nav-link" href="{{route('add_new_song')}}">Додати розбір</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{__('menu_items.popular_songs')}}</a>
+                        <a class="nav-link" href="#">Популярні</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{__('menu_items.artists')}}</a>
+                        <a class="nav-link" href="#">Виконавці</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{__('menu_items.all_songs')}}</a>
+                        <a class="nav-link" href="#">Всі пісні</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{__('menu_items.category')}}</a>
+                        <a class="nav-link" href="#">Категоріх</a>
                     </li>
                     <li>
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">{{__('menu_items.search')}}</button>
+                            <button class="btn btn-outline-success" type="submit">Пошук</button>
                         </form>
                     </li>
                 </ul>

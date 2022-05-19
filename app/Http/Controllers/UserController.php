@@ -21,13 +21,11 @@ class UserController extends Controller
         $this->model=new UsersRepository($usersModel);
     }
 
-    public function showRegisterForm($locale){
-        App::setLocale($locale);
+    public function showRegisterForm(){
         return view('registration');
     }
 
-    public function showLoginForm($locale){
-            App::setLocale($locale);
+    public function showLoginForm(){
         return view('sign_in');
     }
 
@@ -37,7 +35,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return redirect('login')->with('success', "Акаунт створено, будь-ласка увійдіть.");
+        return redirect('sign_in')->with('success', "Акаунт створено, будь-ласка увійдіть.");
     }
 
     public function Logout(){
@@ -51,17 +49,13 @@ class UserController extends Controller
 
         $credentials = $request->getCredentials();
 
-            if(!Auth::validate($credentials)):
-            return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
+        if(!Auth::validate($credentials)):
+        return redirect()->to('login')
+            ->withErrors(trans('auth.failed'));
         endif;
 
+        Auth::attempt($credentials);
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        Auth::login($user, $request->get('remember'));
-
-        if($request->get('remember')):
-            $this->setRememberMeExpiration($user);
-        endif;
 
         return $this->authenticated($request, $user);
     }

@@ -27,10 +27,9 @@ class RegisterRequest extends FormRequest
         return [
             'login'=>['required',
                 'min:3',
-                'regex:#^[aA-zZ\-\_0-9]{4,}#u',
                 function($attribute, $value,$fail){
                     if(DB::table('users')->where('login',$value)->count('login')>0)
-                        $fail('Login is exists!');
+                        $fail('Логін існує!');
                 }
             ],
             'email'=>[
@@ -38,16 +37,14 @@ class RegisterRequest extends FormRequest
                 'email',
                 function($attribute,$value,$fail){
                     if(DB::table('users')->where('email', $value)->count()>0)
-                        $fail('email is exists');
+                        $fail('email існує');
                 }
             ],
             'password' => [
                 'required',
                 'min:6',
-                'regex:#^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\d]){8,}#u'
             ],
             'repeat_password'=>'required|same:password',
-            'user_photo'=>'image'
         ];
     }
 }

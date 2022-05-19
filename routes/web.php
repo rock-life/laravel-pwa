@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], function ()
 {
     Route::get('/',[\App\Http\Controllers\Controller::class, 'toHome'])->name('toHome');
-    Route::get('/edit_lang',[\App\Http\Controllers\Controller::class, 'editLang']);
+    Route::get('/new_song', [\App\Http\Controllers\SongsController::class, 'getPageAddNewSong'])->name('add_new_song');
 
     Route::group(['middleware' =>['guest']], function (){
-        Route::get('/register/{locale}',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
-        Route::any('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');
+        Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
+        Route::post('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');
 
-        Route::get('/login/{locale}',[\App\Http\Controllers\UserController::class, 'showLoginForm'])->name('login');
-        Route::any('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login.perform');
+        Route::get('/sign_in',[\App\Http\Controllers\UserController::class, 'showLoginForm'])->name('login');
+        Route::post('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login.perform');
     });
 
     Route::group(['middleware'=>['auth']], function (){
