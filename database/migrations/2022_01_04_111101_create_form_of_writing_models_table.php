@@ -16,6 +16,7 @@ class CreateFormOfWritingModelsTable extends Migration
         Schema::create('form_of_writing', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('value');
         });
     }
 

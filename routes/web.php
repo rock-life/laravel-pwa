@@ -19,6 +19,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/',[\App\Http\Controllers\Controller::class, 'toHome'])->name('toHome');
     Route::get('/new_song', [\App\Http\Controllers\SongsController::class, 'getPageAddNewSong'])->name('add_new_song');
 
+
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
         Route::post('/register', [\App\Http\Controllers\UserController::class, 'register'])->name('register.perform');

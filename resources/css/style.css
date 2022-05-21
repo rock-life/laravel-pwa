@@ -8145,7 +8145,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 body {
   font-family: "Poppins", Arial, sans-serif;
-    background-image: url("../images/backround.jpg");
+    background-image: url("../../public/images/backround.jpg");
     background-repeat: no-repeat;
     background-size: cover;
   font-size: 14px;

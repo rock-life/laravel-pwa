@@ -42,4 +42,9 @@ class GenreRepository implements \Dotenv\Repository\RepositoryInterface
     {
         // TODO: Implement clear() method.
     }
+
+    public function getAll()
+    {
+        return Genre::all();
+    }
 }

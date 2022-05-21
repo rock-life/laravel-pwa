@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\Artist;
 use App\Models\FormOfWriting;
+use Database\Seeders\form_of_writing;
 use Illuminate\Http\Request;
 
 class FormOfWritingRepository implements \Dotenv\Repository\RepositoryInterface
@@ -41,5 +42,10 @@ class FormOfWritingRepository implements \Dotenv\Repository\RepositoryInterface
     public function clear(string $name)
     {
         // TODO: Implement clear() method.
+    }
+
+    public function getAll()
+    {
+        return FormOfWriting::all();
     }
 }
