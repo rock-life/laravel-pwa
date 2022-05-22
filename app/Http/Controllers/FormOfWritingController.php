@@ -14,4 +14,6 @@ class FormOfWritingController extends Controller
     public function __construct(FormOfWriting $model){
         $this->model=new FormOfWritingRepository($model);
     }
+
+
 }

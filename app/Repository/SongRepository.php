@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Models\Artist;
 use App\Models\Songs;
+use App\Models\SongVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\String\s;
 
 class SongRepository implements \Dotenv\Repository\RepositoryInterface
 {
@@ -41,5 +44,72 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
     public function clear(string $name)
     {
         // TODO: Implement clear() method.
+    }
+
+    public function addNewSong ($data){
+       $songId = $this->isSongExcist($data);
+       $songVariant = new SongVariant();
+       $songVariant->text = $data->get('text-edit-song');
+       $songVariant->visibility = false;
+        $songVariant->video_of_song = $data->get('url_song');
+        $songVariant->video_lesson = $data->get('url_lesson');
+        $songVariant->id_song = $songId;
+        $songVariant->id_form_of_writing = $data->get('type');
+        Auth::id() != null & $songVariant->id_user = Auth::id();
+        $songVariant->save();
+        return $songVariant;
+    }
+
+    private function isArtistExcist($name){
+        $artist = Artist::query()
+            ->where('name', 'like', "%{$name}%")
+            ->first();
+        if ($artist == null) {
+            $artist = new Artist();
+            $artist->name = $name;
+            $artist->save();
+        }
+        return $artist->id;
+    }
+
+    private function isSongExcist($data){
+        $idArtist = $this->isArtistExcist($data->get('artist'));
+        $song = Songs::query()
+            ->where('name', 'like', "%{$data->get('name')}%")
+            ->where('id_artist', '=', $idArtist)
+            ->first();
+        if ($song == null) {
+            $song = new Songs();
+            $song->name = $data->get('name');
+            $song->id_artist = $idArtist;
+            $song->id_genre = $data->get('category');
+            $song->save();
+        }
+        return $song->id;
+    }
+
+    public function getVariantSong($idSong, $idVariantSong, $type){
+        $this->Song = Songs::query()
+            ->where('id', '=', $idSong)
+            ->first();
+        $variantSong = SongVariant::query()
+            ->where('id', '=', $idVariantSong)
+            ->where('id_song', '=', $idSong)
+            ->first();
+        $otherVariants = SongVariant::query()
+            ->where('id_song', '=', $idSong)
+            ->where('id_form_of_writing', '=', $type)
+            ->get();
+        $song = $variantSong->getAttributes();
+        $s = $this->Song->getAttributes();
+        $artist = Artist::query()
+            ->where('id', '=', $s['id_artist'])
+            ->first();
+        $s['id_artist'] = $artist->name;
+        if (!$otherVariants->isEmpty()) {
+            $song['otherVariant'] = $otherVariants->toArray();
+        }
+        $song['id_song'] = $s;
+        return $song;
     }
 }

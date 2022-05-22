@@ -5,13 +5,14 @@ namespace App\Repository;
 use App\Models\Artist;
 use App\Models\SongVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 {
-    protected $SV;
+    protected $songVariant;
 
     public function __constructor(SongVariant $model){
-        $this->SV=$model;
+        $this->songVariant=$model;
     }
 
     public function has(string $name)
@@ -41,5 +42,35 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
     public function clear(string $name)
     {
         // TODO: Implement clear() method.
+    }
+
+    public function getOpenVariantByIdType($id, $type){
+        $SV = SongVariant::query()
+            ->where('id_song', '=', $id)
+            ->where('id_form_of_writing', '=', $type)
+            ->where('visibility', '=', true)
+            ->orWhere(function($query) use ($type, $id) {
+                $query->where('id_song', '=', $id)
+                    ->where('id_form_of_writing', '=', $type)
+                    ->where('visibility', '=', false)
+                    ->where('id_user', '=', Auth::id());
+            })
+            ->get();
+        if(!$SV->isEmpty()){
+            return $SV->toArray();
+        }
+    }
+
+    public function getOpenVariantById($id){
+        $SV = SongVariant::query()
+            ->where('id', '=', $id)
+            ->where('visibility', '=', true)
+            ->orWhere(function($query) use ($id) {
+                $query->where('id', '=', $id)
+                    ->where('visibility', '=', false)
+                    ->where('id_user', '=', Auth::id());
+            })
+            ->first();
+        return $SV->getAttributes();
     }
 }

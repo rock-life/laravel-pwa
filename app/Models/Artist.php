@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artist extends Model
 {
-    protected $table='artist_models';
+    protected $table='artist';
     public function songs(){
         return $this->hasMany('App\Models\Songs');
     }

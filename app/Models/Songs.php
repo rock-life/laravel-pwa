@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Songs extends Model
 {
-    protected $table='songs_models';
+    protected $table='songs';
     public $timestamps=false;
     public function saveSong(){
         return $this->hasMany('App\Models\SavedSong');

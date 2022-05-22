@@ -7,6 +7,7 @@
             <div class="alert alert-success">
                 <p class="text-center">{{$data}}</p>
             </div>
+                <?php Session::forget('success'); ?>
         @endif
 
         <form method="post" action="{{route('login.perform')}}">

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SongVariant extends Model
 {
-    protected $table='song_variant_models';
+    protected $table='song_variant';
     public function song(){
        return $this->belongsTo('App\Models\Songs');
     }

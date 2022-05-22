@@ -62,3 +62,80 @@
 #rule-note {
     margin-left: 10px;
 }
+#artistVariant {
+    width: 100%;
+    background-color: black;
+    margin-top: -30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+#artistVariant input {
+    width: 100%;
+    margin: 0px;
+    background-color: black;
+    border-color: black;
+    border-radius: 10px;
+    color: white;
+}
+.header-content-song {
+    display: flex;
+    justify-content: space-between;
+}
+.header-content-song select{
+    height: 20px;
+    border-radius: 5px;
+    margin: 5px;
+}
+.header-content-song div{
+    font-size: 14px;
+}
+.content-song{
+    width: 100%;
+}
+.song-show{
+    display: flex;
+}
+.song-show .add-song-field{
+    border-radius: 0px 0px 20px 20px;
+    margin-left: 0px;
+}
+.panel-action{
+    border-radius: 10px;
+    background-color: #ffffff3b;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 20px;
+}
+.components-action{
+    display: flex;
+    justify-content: space-between;
+}
+.components-action input{
+    margin: 5px;
+    width: 40px;
+    border-radius: 10px;
+    border-color: white;
+}
+.components-action span{
+    margin: 5px;
+}
+
+.panel-iframe{
+    color: white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+.panel-iframe span{
+    align-self: center;
+}
+.panel-iframe iframe{
+    width: auto;
+    height: auto;
+}
+textarea{
+    white-space: pre;
+}
+

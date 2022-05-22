@@ -1,7 +1,7 @@
 
 <nav id="sidebar">
     <div class="p-4 pt-5">
-        <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
+        <a href="#" class="img logo rounded-circle mb-5"></a>
         <ul class="list-unstyled components mb-5">
             @guest()
             <li>
@@ -19,7 +19,7 @@
                 <a href="#">Мої додані</a>
             </li>
             <li>
-                <a href="{{'logout'}}">Вихід</a>
+                <a href="{{route('logout')}}">Вихід</a>
             </li>
         @endauth
         @can('admin_panel',App\Models\User::class)
@@ -76,7 +76,7 @@
                         <a class="nav-link" href="#">Всі пісні</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Категоріх</a>
+                        <a class="nav-link" href="#">Категорії</a>
                     </li>
                     <li>
                         <form class="d-flex">
