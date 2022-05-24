@@ -112,4 +112,13 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         $song['id_song'] = $s;
         return $song;
     }
+    public function getMyAddedSong(){
+        return SongVariant::query()
+            ->join('songs', 'songs.id', '=', 'song_variant.id_song')
+            ->join('artist', 'artist.id', '=', 'songs.id_artist')
+            ->join('form_of_writing', 'form_of_writing.id', '=', 'song_variant.id_form_of_writing')
+            ->where('song_variant.id_user', '=', Auth::id())
+            ->get(['songs.id as id', 'artist.name as nameArtist', 'artist.id as artistId', 'song_variant.id as song_variantId', 'form_of_writing.name as form_of_writing', 'form_of_writing.id as form_of_writingId' ])
+            ->toArray();
+    }
 }

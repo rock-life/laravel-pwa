@@ -82,5 +82,8 @@ class SongsController extends Controller
                     ]);
     }
 
-
+    public function getMyAddedSong(){
+        $data = $this->model->getMyAddedSong();
+        return view('my_added_song', ['result' => $data]);
+    }
 }
