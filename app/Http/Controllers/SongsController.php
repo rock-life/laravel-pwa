@@ -121,6 +121,9 @@ class SongsController extends Controller
             'namePage' => 'Усі пісні'
         ]);
     }
-
+    public function getMyAddedSong(){
+        $data = $this->model->getMyAddedSong();
+        return view('my_added_song', ['result' => $data]);
+    }
 
 }

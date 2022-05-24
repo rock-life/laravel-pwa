@@ -42,4 +42,45 @@ class SongVariantController extends Controller
             return response()->json($typeValue);
         }
     }
+
+    public function delMyAddedSong(Request $request){
+        if ($request->ajax() && Auth::id() != null) {
+            try {
+                $result = $this->model->delMyAddedSong($request->get('id'));
+            } catch (\Exception $e){
+                $result = $e->getMessage();
+            }
+            return response()->json(['result' => $result]);
+        }
+    }
+
+    public function editMyAddedSong(Request $request){
+        $request->validated();
+        $song = $this->model->editSong($request);
+        return redirect()->route(
+            'getSong',
+            [
+                'id_song' => $song->id_song,
+                'id_song_variant' => $song->id,
+                'type' => $request->get('type')
+            ]
+        );
+    }
+
+    public function editSongPage($id){
+        $result = $this->model->getSongVariant($id);
+        return view('edit_song',['data_song' => $result]);
+    }
+
+    public function editSongVisibility(Request $request){
+        if ($request->ajax()) {
+            try {
+                $this->model->editSongVisibility($request->get('id'));
+                return response()->json(['result' => true]);
+            } catch (\Exception $e){
+                return response()->json(['result' => $e->getMessage()]);
+            }
+
+        }
+    }
 }
