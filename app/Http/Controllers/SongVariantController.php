@@ -61,4 +61,16 @@ class SongVariantController extends Controller
         $result = $this->model->getSongVariant($id);
         return view('edit_song',['data_song' => $result]);
     }
+
+    public function editSongVisibility(Request $request){
+        if ($request->ajax()) {
+            try {
+                $this->model->editSongVisibility($request->get('id'));
+                return response()->json(['result' => true]);
+            } catch (\Exception $e){
+                return response()->json(['result' => $e->getMessage()]);
+            }
+
+        }
+    }
 }

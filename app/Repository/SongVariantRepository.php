@@ -106,4 +106,16 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             ->get(['id','songs.name as name','artist.name as artist', 'text', 'video_of_song', 'video_lesson', 'form_of_writing.name as form_of_writing'])
             ->toArray();
     }
+
+    public function editSongVisibility($get)
+    {
+        $this->songVariant = SongVariant::query()->where('id', '=', $get)->getModel();
+        if ($this->songVariant->visibility == true) {
+            $this->songVariant->visibility = false;
+        } else {
+            $this->songVariant->visibility = true;
+        }
+        $this->songVariant->save();
+
+    }
 }

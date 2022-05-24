@@ -23,13 +23,6 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/show-song/{id_song}/{id_song_variant}/{type}', [\App\Http\Controllers\SongsController::class, 'getSong'])->name('getSong');
     Route::get('/variant', [\App\Http\Controllers\SongVariantController::class, 'getVariantSong'])->name('getVariantSong');
     Route::get('/variant-text', [\App\Http\Controllers\SongVariantController::class, 'getVariantTextSong'])->name('getVariantTextSong');
-    Route::get('/set-save-song' ,[\App\Http\Controllers\SaveSongController::class, 'setSavedSong'])->name('setSavedSong');
-    Route::get('/get-save-song' ,[\App\Http\Controllers\SaveSongController::class, 'getSavedSong'])->name('getSavedSong');
-    Route::get('/del-save-song', [\App\Http\Controllers\SaveSongController::class, 'delSavedSong'])->name('delSavedSong');
-    Route::get('/my-added-song', [\App\Http\Controllers\SongsController::class, 'getMyAddedSong'])->name('getMyAddedSong');
-    Route::get('/del-my-added-song', [\App\Http\Controllers\SongVariantController::class, 'delMyAddedSong'])->name('delMyAddedSong');
-    Route::post('/edit-song', [\App\Http\Controllers\SongVariantController::class, 'editMyAddedSong'])->name('editMyAddedSong');
-    Route::get('/edit-song-page/{id}', [\App\Http\Controllers\SongVariantController::class, 'editSongPage'])->name('editSongPage');
 
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');
@@ -40,6 +33,14 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     });
 
     Route::group(['middleware'=>['auth']], function (){
+        Route::get('/set-save-song' ,[\App\Http\Controllers\SaveSongController::class, 'setSavedSong'])->name('setSavedSong');
+        Route::get('/get-save-song' ,[\App\Http\Controllers\SaveSongController::class, 'getSavedSong'])->name('getSavedSong');
+        Route::get('/del-save-song', [\App\Http\Controllers\SaveSongController::class, 'delSavedSong'])->name('delSavedSong');
+        Route::get('/my-added-song', [\App\Http\Controllers\SongsController::class, 'getMyAddedSong'])->name('getMyAddedSong');
+        Route::get('/del-my-added-song', [\App\Http\Controllers\SongVariantController::class, 'delMyAddedSong'])->name('delMyAddedSong');
+        Route::post('/edit-song', [\App\Http\Controllers\SongVariantController::class, 'editMyAddedSong'])->name('editMyAddedSong');
+        Route::get('/edit-song-page/{id}', [\App\Http\Controllers\SongVariantController::class, 'editSongPage'])->name('editSongPage');
+        Route::get('/edit-visibility', [\App\Http\Controllers\SongVariantController::class, 'editSongVisibility'])->name('editSongVisibility');
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
         Route::middleware(['role:administrator'])->group(function (){
             Route::any('/AminPanel', function (){
