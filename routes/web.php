@@ -28,6 +28,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/del-save-song', [\App\Http\Controllers\SaveSongController::class, 'delSavedSong'])->name('delSavedSong');
     Route::get('/my-added-song', [\App\Http\Controllers\SongsController::class, 'getMyAddedSong'])->name('getMyAddedSong');
     Route::get('/del-my-added-song', [\App\Http\Controllers\SongVariantController::class, 'delMyAddedSong'])->name('delMyAddedSong');
+    Route::post('/edit-my-added-song', [\App\Http\Controllers\SongVariantController::class, 'editMyAddedSong'])->name('editMyAddedSong');
 
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');

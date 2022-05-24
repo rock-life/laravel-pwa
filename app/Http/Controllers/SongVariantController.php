@@ -43,4 +43,17 @@ class SongVariantController extends Controller
             return response()->json(['result' => $result]);
         }
     }
+
+    public function editMyAddedSong(Request $request){
+        $request->validated();
+        $song = $this->model->editSong($request);
+        return redirect()->route(
+            'getSong',
+            [
+                'id_song' => $song->id_song,
+                'id_song_variant' => $song->id,
+                'type' => $request->get('type')
+            ]
+        );
+    }
 }

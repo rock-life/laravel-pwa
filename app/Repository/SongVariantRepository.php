@@ -83,4 +83,17 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             ->where('id', '=', $id)
             ->delete();
     }
+
+    public function editSong($data)
+    {
+        $songVariant = SongVariant::query()->where('id', '=', $data->get('id_variant'))->getModel();
+        $songVariant->text = $data->get('text-edit-song');
+        $songVariant->visibility = false;
+        $songVariant->video_of_song = $data->get('url_song');
+        $songVariant->video_lesson = $data->get('url_lesson');
+        $songVariant->id_song = $data->get('id');
+        $songVariant->id_form_of_writing = $data->get('type');
+        $songVariant->save();
+        return $songVariant;
+    }
 }
