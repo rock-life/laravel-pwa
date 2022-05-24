@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Artist;
+use App\Models\SavedSong;
 use App\Models\SongVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,5 +73,14 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             })
             ->first();
         return $SV->getAttributes();
+    }
+
+    public function delMyAddedSong($id){
+        SavedSong::query()
+            ->where('id_song', '=', $id)
+            ->delete();
+       return SongVariant::query()
+            ->where('id', '=', $id)
+            ->delete();
     }
 }

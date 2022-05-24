@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SongVariant;
 use App\Repository\SongVariantRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SongVariantController extends Controller
 {
@@ -29,6 +30,17 @@ class SongVariantController extends Controller
         if ($request->ajax()){
             $typeValue = $this->model->getOpenVariantById($request->get('id'));
             return response()->json($typeValue);
+        }
+    }
+
+    public function delMyAddedSong(Request $request){
+        if ($request->ajax() && Auth::id() != null) {
+            try {
+                $result = $this->model->delMyAddedSong($request->get('id'));
+            } catch (\Exception $e){
+                $result = $e->getMessage();
+            }
+            return response()->json(['result' => $result]);
         }
     }
 }
