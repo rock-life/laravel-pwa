@@ -56,4 +56,9 @@ class SongVariantController extends Controller
             ]
         );
     }
+
+    public function editSongPage($id){
+        $result = $this->model->getSongVariant($id);
+        return view('edit_song',['data_song' => $result]);
+    }
 }

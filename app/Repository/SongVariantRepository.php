@@ -91,9 +91,19 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
         $songVariant->visibility = false;
         $songVariant->video_of_song = $data->get('url_song');
         $songVariant->video_lesson = $data->get('url_lesson');
-        $songVariant->id_song = $data->get('id');
         $songVariant->id_form_of_writing = $data->get('type');
         $songVariant->save();
         return $songVariant;
+    }
+
+    public function getSongVariant($id)
+    {
+        return SongVariant::query()
+            ->join('songs', 'songs.id', 'song_variant.id_song')
+            ->join('artist', 'artist.id', 'songs.id_artist')
+            ->join('form_of_writing', 'song_variant.id_form_of_writing', 'form_of_writing.id')
+            ->where('id', '=', $id)
+            ->get(['id','songs.name as name','artist.name as artist', 'text', 'video_of_song', 'video_lesson', 'form_of_writing.name as form_of_writing'])
+            ->toArray();
     }
 }
