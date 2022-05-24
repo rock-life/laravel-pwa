@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SongVariant;
 use App\Repository\SongVariantRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SongVariantController extends Controller
 {
@@ -19,7 +20,17 @@ class SongVariantController extends Controller
         if ($request->ajax()){
             $typeValue = [];
             foreach ($this->model->getOpenVariantByIdType($request->get('id'),$request->get('type')) as $key => $variant){
-                $typeValue += [$key++ => $variant['id']];
+                if (Auth::id() != null) {
+                    if($variant['id_user'] == Auth::id()){
+                        $typeValue += [$key++ => $variant['id']];
+                    } else if ($variant['visibility'] == 1){
+                        $typeValue += [$key++ => $variant['id']];
+                    }
+                } else{
+                    if ($variant['visibility'] == 1){
+                        $typeValue += [$key++ => $variant['id']];
+                    }
+                }
             }
             return response()->json($typeValue);
         }

@@ -48,6 +48,37 @@ class SongsController extends Controller
         );
     }
 
+    public function getSongShow($id_song){
+        $types = $this->form->getAll();
+        $songDetail = $this->model->getVariantSong($id_song);
+        $song = $songDetail['id_song'];
+        if ($songDetail['visibility'] == false && $songDetail['id_user'] == Auth::id()) {
+            $name = $song['name'];
+            $artist = $song['id_artist'];
+            $text = $songDetail['text'];
+            $idSong = $id_song;
+            $idOthersVariants = $songDetail['otherVariant'] ?? $songDetail['id'];
+        } else if ($songDetail['visibility'] == true) {
+            $name = $song['name'];
+            $artist = $song['id_artist'];
+            $text = $songDetail['text'];
+            $idSong = $id_song;
+            $idOthersVariants = $songDetail['otherVariant'] ?? $songDetail['id'];
+        } else {
+            abort('404');
+        }
+        return view('open_song',
+            [
+                'songDetail' => $songDetail,
+                'types' => $types,
+                'name' => $name,
+                'artist' => $artist,
+                'text' => $text,
+                'idSong' => $idSong,
+                'OthersVariant' => $idOthersVariants
+            ]);
+    }
+
     public function getSong($id_song, $id_song_variant,$type) {
         $types = $this->form->getAll();
         $songDetail = $this->model->getVariantSong($id_song, $id_song_variant, $type);
@@ -67,6 +98,7 @@ class SongsController extends Controller
         } else {
             abort('404');
         }
+
         if (Auth::id() == null) {
             return view('home',['message' =>  "Пісня додана і найближчим часом буде розглянута нашим адміністратором."]);
         }
@@ -80,6 +112,14 @@ class SongsController extends Controller
                         'idSong' => $idSong,
                         'OthersVariant' => $idOthersVariants
                     ]);
+    }
+
+    public function getSongPage(){
+        $song = $this->model->getAllSongsFrom(0) ;
+        return view('songs',[
+            'songs' => $song,
+            'namePage' => 'Усі пісні'
+        ]);
     }
 
 

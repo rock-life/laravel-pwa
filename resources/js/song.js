@@ -34,7 +34,7 @@
                 'id': $('#variant').find(":selected").attr('value'),
             },
         }).done(function (data) {
-            $('#text-edit-song').val(data['text']);
+            $('#text-song').html(data['text']);
             if (data['video_of_song']!=null){
                 $('#video_of_song').attr('hidden',false);
                 var tag = '';
@@ -86,17 +86,22 @@
     $('#add-type').click(function (){
         if ( $('#add-type').attr('type-song') == 'notes') {
             var temp = $('#text-edit-song').val();
-            temp += '[note]\n' +
+            temp += '\n[note]\n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
+                    '                                                                                                           \n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
+                    '                                                                                                           \n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
+                    '                                                                                                           \n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
+                    '                                                                                                           \n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
-                    '[note-end-line]\n';
+                    '                                                                                                           \n' +
+                '[note-end-line]\n';
             $('#text-edit-song').val(temp);
         } else {
             var temp = $('#text-edit-song').val();
-            temp += '[tabs]\n' +
+            temp += '\n[tabs]\n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
                     '             |--------------------------------------------------------------------------------------------|\n' +
@@ -161,6 +166,26 @@
     $('form').submit(function(){
         $(this).find('#').prop('disabled', true);
     });
+
+    $('#ton+').click(function (){
+        if($('#type').find(":selected").attr('type') == 1 ){
+
+        }else if($('#type').find(":selected").attr('type') == 2){
+
+        } else {
+            var temp = $('#text-song').html();
+
+        }
+    })
+    $('#ton-').click(function (){
+        if($('#type').find(":selected").attr('type') == 1 ){
+
+        }else if($('#type').find(":selected").attr('type') == 2){
+
+        } else {
+
+        }
+    })
 
 
 })(jQuery);

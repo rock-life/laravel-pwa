@@ -7,6 +7,7 @@ use App\Models\Songs;
 use App\Models\SongVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use function Symfony\Component\String\s;
 
 class SongRepository implements \Dotenv\Repository\RepositoryInterface
@@ -88,28 +89,64 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         return $song->id;
     }
 
-    public function getVariantSong($idSong, $idVariantSong, $type){
+    public function getVariantSong($idSong, $idVariantSong = 0, $type = 1){
         $this->Song = Songs::query()
             ->where('id', '=', $idSong)
             ->first();
-        $variantSong = SongVariant::query()
-            ->where('id', '=', $idVariantSong)
-            ->where('id_song', '=', $idSong)
-            ->first();
-        $otherVariants = SongVariant::query()
-            ->where('id_song', '=', $idSong)
-            ->where('id_form_of_writing', '=', $type)
-            ->get();
+        if($idVariantSong == 0){
+            $variantSong = SongVariant::query()
+//                ->where('id', '=', $idVariantSong)
+                ->where('visibility', '=', 1)
+                ->where('id_song', '=', $idSong)
+                ->first();
+            if (Auth::id()==null)
+                $otherVariants = SongVariant::query()
+                    ->where('visibility', '=', 1)
+                    ->where('id_song', '=', $idSong)
+                    ->where('id_form_of_writing', '=', $type)
+                    ->get()->toArray();
+            else
+            $otherVariants = SongVariant::query()
+                        ->where('id_user', '=', Auth::id())
+                        ->where('id_song', '=', $idSong)
+                        ->where('id_form_of_writing', '=', $type)
+                        ->get()->toArray();
+        } else {
+            $variantSong = SongVariant::query()
+                ->where('id', '=', $idVariantSong)
+                ->where('id_song', '=', $idSong)
+                ->first();
+            $otherVariants = SongVariant::query()
+                ->where('id_song', '=', $idSong)
+                ->where('id_form_of_writing', '=', $type)
+                ->get()->toArray();
+        }
         $song = $variantSong->getAttributes();
         $s = $this->Song->getAttributes();
         $artist = Artist::query()
             ->where('id', '=', $s['id_artist'])
             ->first();
         $s['id_artist'] = $artist->name;
-        if (!$otherVariants->isEmpty()) {
-            $song['otherVariant'] = $otherVariants->toArray();
+        if (!empty($otherVariants)) {
+            $song['otherVariant'] = $otherVariants;
         }
         $song['id_song'] = $s;
         return $song;
+    }
+
+    public function getAllSongsFrom($from){
+        $songs = DB::table('songs')
+            ->join('artist', 'artist.id', '=', 'songs.id_artist' )
+            ->select('songs.id','songs.name', 'artist.name as artist', 'songs.id_artist')->get()->toArray();
+        $songsValue = array();
+        foreach ($songs as $song){
+            $temp = SongVariant::query()
+                ->where('visibility', '=', true)
+                ->where('id_song', '=', $song->id)->get()->toArray();
+            if (!empty($temp)) {
+                $songsValue[] = $song;
+            }
+        }
+        return $songsValue;
     }
 }

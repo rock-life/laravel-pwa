@@ -73,7 +73,7 @@
                         <a class="nav-link" href="#">Виконавці</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Всі пісні</a>
+                        <a class="nav-link" href="{{route('getSongPage')}}">Всі пісні</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Категорії</a>

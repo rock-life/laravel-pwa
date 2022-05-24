@@ -42,7 +42,7 @@
             </div>
             <div class="song-show">
                 <div class="add-song-field">
-                    <textarea readonly name="text-edit-song" id="text-edit-song">{{$text}}</textarea>
+                    <pre id="text-song">{{$text}}</pre>
                 </div>
                 <div class="add-song-detail">
                 <div class="inputs">
