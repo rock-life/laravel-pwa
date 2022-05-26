@@ -535,5 +535,19 @@
         }) ;
     })
 
+    $('#delete-saved').click(function (){
+        $.ajax({
+            type: "GET",
+            url: '/del-save-song',
+            data: {
+                'id': $('#delete-saved').attr('id_song')
+            },
+        }).done(function (data) {
+            location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
+    })
+
 
 })(jQuery);

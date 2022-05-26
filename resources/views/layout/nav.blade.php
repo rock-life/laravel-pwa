@@ -26,7 +26,7 @@
                     </li>
                     @endadministrator
             <li>
-                <a href="#">Збереженні</a>
+                <a href="{{route('getSavedSong')}}">Збереженні</a>
             </li>
             <li>
                 <a href="{{route('getMyAddedSong')}}">Мої додані</a>
