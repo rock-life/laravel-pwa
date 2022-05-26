@@ -12,29 +12,29 @@
             </li>
             @endguest
             @auth()
+                    @moderator
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
+                    </li>
+                    @endmoderator
+                    @administrator
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
+                    </li>
+                    @endadministrator
             <li>
                 <a href="#">Збереженні</a>
             </li>
             <li>
-                <a href="#">Мої додані</a>
+                <a href="{{route('getMyAddedSong')}}">Мої додані</a>
             </li>
             <li>
                 <a href="{{route('logout')}}">Вихід</a>
             </li>
         @endauth
-        @moderator
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування піснями')}}</a>
-                </li>
-        @endmoderator
-        @administrator
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування піснями')}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
-                </li>
-        @endadministrator
         </ul>
 
         <div class="footer">
