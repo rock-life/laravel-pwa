@@ -8,6 +8,12 @@
                 'type': $('#type-header').find(":selected").attr('value')
             },
         }).done(function (data) {
+            if ($('#type-header').find(":selected").attr('value') == 2) {
+                $('#action-ton').attr('hidden', true);
+            }
+            else {
+                $('#action-ton').attr('hidden', false);
+            }
             var buttons = '';
             $.each(data, function(index, item) {
                 index++;
@@ -21,6 +27,12 @@
                 $('#variant').change();
             }
         }).fail(function (e){
+            if ($('#type-header').find(":selected").attr('value') == 2) {
+                $('#action-ton').attr('hidden', true);
+            }
+            else {
+                $('#action-ton').attr('hidden', false);
+            }
             $('#variant').attr('hidden', true);
             console.log(e);
         });
@@ -167,25 +179,269 @@
         $(this).find('#').prop('disabled', true);
     });
 
-    $('#ton+').click(function (){
-        if($('#type').find(":selected").attr('type') == 1 ){
-
-        }else if($('#type').find(":selected").attr('type') == 2){
-
-        } else {
-            var temp = $('#text-song').html();
+    function otherPropertiesChord(alt,s_e,  i)
+    {
+        var k=i;
+        if(i>s_e.length-3&&i<s_e.length)
+            return false;
+        if(alt==true)
+            k= k+1;
+        if(s_e[k+1]=='m')
+        {
+            if (s_e[k+2]==' '||s_e[k+2]=='\n'||s_e[k+2]=='\t')
+                return true;
+            if(s_e[k+2]>0&&s_e[k+2]<+9)
+                return true;
+            if(s_e[k+2]=='m'&&s_e[k+3]=='a'&&s_e[k+4]=='j')
+                return true;
 
         }
+        else {
+            if (s_e[k+1]==' '||s_e[k+1]=='\n'||s_e[k+1]=='\t')
+                return true;
+            if(s_e[k+1]=='d'&&s_e[k+2]=='i'&&s_e[k+3]=='m')
+                return true;
+            if(s_e[k+1]=='s'&&s_e[k+2]=='u'&&s_e[k+3]=='s')
+                return true;
+            if(s_e[k+1] >= 0 && s_e[k+1] <= 9)
+                return true;
+        }
+        return false;
+    }
+
+
+    function ifEditSong(s_e, i) {
+        var is_alteration=false;
+        switch (s_e[i+1])
+        {
+            case 'b': is_alteration=true; return otherPropertiesChord(is_alteration,s_e,i);
+            case '#': is_alteration=true; return otherPropertiesChord(is_alteration,s_e,i);
+            default:return otherPropertiesChord(is_alteration,s_e,i);
+        }    }
+
+    $('#ton').click(function (){
+        if($('#type-header').find(":selected").attr('value') == 1 ){
+            var song_exist = $('#text-song').html();
+            var song = [];
+            var j = 0;
+            for (var i = 0; i<=song_exist.length; i++){
+                if(song_exist[i] > 0 && song_exist[i] < 40){
+                    if(song_exist[i+1] == '-'){
+                        var v = parseInt(song_exist[i]) + 1;
+                        song[j] = (v);
+                        j++;
+                    } else if (song_exist[i+1] >= 0 && song_exist[i+2] == '-'){
+                        var v ='';
+                        v = (song_exist[i]) + (song_exist[i+1])
+                        song[j] = parseInt(v)+1;
+                        i=i+2;
+                        j++;
+                        song[j] = "-";
+                        j++;
+                    }
+                } else {
+                    song[j] = song_exist[i];
+                    j++;
+                }
+            }
+            $('#text-song').html(song);
+
+        } else if($('#type-header').find(":selected").attr('value') == 2){
+
+        } else
+        {
+            var if_is = false;
+            var Note=['A','B','C','D','E','F','G'];
+            var song_exist = $('#text-song').html();
+            var song = [];
+            var j, v=0;
+
+            for (var i = 0; i < song_exist.length; i++)
+            {
+                if(i>=song_exist.length-1)
+                    break;
+                for(j=0;j<Note.length;j++)
+                {
+                    if (song_exist[i] == Note[j])
+                    {
+
+                        if(i==0)
+                        {
+                            if_is=ifEditSong(song_exist,i);
+                            break;
+                        }
+                        else{
+                            if (song_exist[i - 1] == ' ' || song_exist[i - 1] == '\n' || song_exist[i - 1] == '\t')
+                            {  if_is = ifEditSong(song_exist, i);
+                                break;}
+                            else {
+                                if_is=false;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+                if (if_is==false)
+                {
+                    song[v]=song_exist[i];
+                }
+                else
+                {
+                    if (song_exist[i + 1] == '#')
+                    {
+                        var t=Note.length;
+                        if(j==Note.length-1)
+                        {
+                            song[v] = Note[0];
+                            i++;
+                        }
+                        else
+                        {song[v] = Note[j+1];
+                            i++;}
+                    }
+                    else if(song_exist[i]=='E')
+                    {
+                        song[v]='F';
+                    }
+                    else if(song_exist[i]=='B')
+                    {
+                        song[v]='C';
+                    }
+                    else {
+                        if (song_exist[i + 1] == 'b')
+                        {
+                            song[v] = song_exist[i];
+                            i++;
+
+                        }
+
+                        else
+                        {
+                            song[v]=song_exist[i];
+                            v++;
+                            song[v]='#';
+                        }
+                    }
+                    if_is=false;
+                }
+                v++;
+            }
+            song[song.length]=song_exist[song_exist.length-1];
+            $('#text-song').html(song);
+        }
+
     })
     $('#ton-').click(function (){
-        if($('#type').find(":selected").attr('type') == 1 ){
+        var f = $('#type-header').find(":selected").attr('value');
+        if($('#type-header').find(":selected").attr('value') == 1 ){
+            var song_exist = $('#text-song').html();
+            var song = [];
+            var j = 0;
+            for (var i = 0; i<=song_exist.length; i++){
+                if (song_exist[i] == 1 && song_exist[i+1]=='-' && song_exist[i-1]=='-')
+                {
+                     var song = $('#text-song').html();
+                    break;
+                }
+                if(song_exist[i] > 0 && song_exist[i] < 40){
+                    if(song_exist[i+1] == '-'){
+                        var v = parseInt(song_exist[i]) - 1;
+                        song[j] = (v);
+                        j++;
+                    } else if (song_exist[i+1] >= 0 && song_exist[i+2] == '-'){
+                        var v ='';
+                        v = (song_exist[i]) + (song_exist[i+1])
+                        song[j] = parseInt(v)-1;
+                        j++;
+                        i=i+2;
+                        song[j]='-';
+                        j++;
+                    }
+                }else {
+                    song[j] = song_exist[i];
+                    j++;
+                }
+            }
+            $('#text-song').html(song);
 
-        }else if($('#type').find(":selected").attr('type') == 2){
+        }else if($('#type-header').find(":selected").attr('value') == 2){
 
-        } else {
+        } else
+        {
+            var if_is = false;
+            var Note=['A','B','C','D','E','F','G'];
+            var song_exist = $('#text-song').html();
+            var song = [];
+            var j, v=0;
 
+            for (var i = 0; i < song_exist.length; i++)
+            {
+                if(i>=song_exist.length-1)
+                    break;
+                for(j=0;j<Note.length;j++)
+                {
+                    if (song_exist[i] == Note[j])
+                    {
+
+                        if(i==0)
+                        {
+                            if_is=ifEditSong(song_exist,i);
+                            break;
+                        }
+                        else{
+                            if (song_exist[i - 1] == ' ' || song_exist[i - 1] == '\n' || song_exist[i - 1] == '\t')
+                            {  if_is = ifEditSong(song_exist, i);
+                                break;}
+                            else {
+                                if_is=false;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+                if (if_is==false)
+                {
+                    song[v]=song_exist[i];
+                }
+                else
+                {
+                    if (song_exist[i + 1] == '#') {
+                        song[v] = song_exist[i];
+                        i++;
+                    }
+                    else if (song_exist[i] == 'F') {
+                        song[v] = 'E';
+                    } else if (song_exist[i] == 'C') {
+                        song[v] = 'B';
+                    } else {
+                        if (song_exist[i + 1] == 'b') {
+                            if(j==0)
+                            {
+                                song[v] = Note[Note.length-1];
+                                i++;
+                            }
+                            else {
+                                song[v] = Note[j - 1];
+                                i++;
+                            }
+                        }
+                        else {
+                            song[v] = song_exist[i];
+                            v++;
+                            song[v] = 'b';
+                        }
+                    }
+                    if_is=false;
+                }
+                v++;
+            }
+            song[song.length]=song_exist[song_exist.length-1];
+            $('#text-song').html(song);
         }
     })
+
 
 
 })(jQuery);

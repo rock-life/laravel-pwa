@@ -47,10 +47,10 @@
                 <div class="add-song-detail">
                 <div class="inputs">
                     <div class="panel-action">
-                        <div class="components-action">
+                        <div id="action-ton" class="components-action">
                             <input type="button" id="ton-" value="-">
                             <span>Тональність</span>
-                            <input type="button" id="ton+" value="+">
+                            <input type="button" id="ton" value="+">
                         </div>
                         <div class="components-action">
                             <input type="button"  id="font-" value="-">
