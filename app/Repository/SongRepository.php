@@ -178,4 +178,22 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         }
         return $songsValue;
     }
+
+    public function getArtistSongs($id)
+    {
+        $songs = DB::table('songs')
+            ->join('artist', 'artist.id', '=', 'songs.id_artist' )
+            ->select('songs.id','songs.name', 'artist.name as artist', 'songs.id_artist')
+            ->where('songs.id_artist', 'like', $id)->get()->toArray();
+        $songsValue = array();
+        foreach ($songs as $song){
+            $temp = SongVariant::query()
+                ->where('visibility', '=', true)
+                ->where('id_song', '=', $song->id)->get()->toArray();
+            if (!empty($temp)) {
+                $songsValue[] = $song;
+            }
+        }
+        return $songsValue;
+    }
 }

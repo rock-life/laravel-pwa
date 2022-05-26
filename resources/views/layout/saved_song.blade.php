@@ -19,7 +19,7 @@
                     </tr>
                     @foreach($songs as $song)
                         <tr>
-                            <td><a href="{{route('getArtistSongPage', ['id_artist' => $song->id_artist])}}">{{$song->artist}}</a></td>
+                            <td><a href="{{route('songsArtist', ['id' => $song->id_artist])}}">{{$song->artist}}</a></td>
                             <td><a href="{{route('getSongShow', ['id_song' => $song->id])}}">{{$song->name}}</a></td>
                             <td> <input type="button"  class="form-control footer-action-button" id="delete-saved" id_song="{{$song->id}}" value="Видалити зі списку"/> </td>
                         </tr>

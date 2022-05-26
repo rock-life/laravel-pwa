@@ -133,5 +133,12 @@ class SongsController extends Controller
             'namePage' => 'Результат пошуку'
         ]);
     }
+    public function songsArtist($id){
+    $song = $this->model->getArtistSongs($id) ;
+    return view('songs',[
+        'songs' => $song,
+        'namePage' => 'Результат пошуку'
+    ]);
+}
 
 }
