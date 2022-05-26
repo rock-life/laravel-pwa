@@ -12,6 +12,9 @@
                 <a>{{$name}} </a>
             </span>
                 <div>
+                    <input type="button"  class="form-control footer-action-button" id="delete" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
+                    @endadministrator
+                    <a href="{{route('editSongPage', ['id' => $songDetail['id']])}}" class="form-control footer-action-button" id_song="{{$songDetail['id']}}" > Редагувати </a>
                     <select id="variant" name="variant">
                         @if(!is_array($OthersVariant))
                             {{$OthersVariant}}

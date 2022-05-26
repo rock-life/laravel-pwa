@@ -22,14 +22,19 @@
                 <a href="{{route('logout')}}">Вихід</a>
             </li>
         @endauth
-        @can('admin_panel',App\Models\User::class)
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin_panel')}}">{{__('Заявки на публікацію')}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
-            </li>
-        @endcan
+        @moderator
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування піснями')}}</a>
+                </li>
+        @endmoderator
+        @administrator
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування піснями')}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
+                </li>
+        @endadministrator
         </ul>
 
         <div class="footer">
@@ -57,17 +62,11 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
-                    @can('admin_panel',App\Models\User::class)
-
-                    @endcan
                     <li  class="nav-item active">
                         <a class="nav-link" href="{{route('toHome')}}">Головна</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('add_new_song')}}">Додати розбір</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Популярні</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Виконавці</a>

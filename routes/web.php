@@ -46,8 +46,12 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
         Route::get('/edit-visibility', [\App\Http\Controllers\SongVariantController::class, 'editSongVisibility'])->name('editSongVisibility');
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
         Route::middleware(['role:administrator'])->group(function (){
-            Route::any('/AminPanel', function (){
-                return view('admin_panel.home');})->name('admin_panel');
+//            Route::any('/AminPanel', function (){
+//                return view('admin_panel.home');})->name('admin_panel');
+        });
+        Route::middleware(['role:moderator'])->group(function (){
+//            Route::any('/AminPanel', function (){
+//                return view('admin_panel.home');})->name('admin_panel');
         });
     });
 
