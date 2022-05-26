@@ -455,6 +455,20 @@
         $('#text-song').css('font-size', String(size) + 'px');
     })
 
+    $('#scroll').click(function (){
+        var temp = $('#speed').attr('value');
+        var speed = parseInt(temp) + 1;
+        $('#speed').attr('value', speed)
+        $("html, body").animate({ scrollTop: $(window).height()}, $('#speed').attr('value'));
+        $('#pr').html('Прокрутити - ' + String(speed));
+    })
+    $('#scroll-').click(function (){
+        var temp = $('#speed').attr('value');
+        var speed = parseInt(temp) - 1;
+        $('#speed').attr('value', speed)
+        $("html, body").animate({ scrollTop: $(window).height()}, $('#speed').attr('value'));
+        $('#pr').html('Прокрутити - ' + String(speed));
+    })
 
 
 })(jQuery);

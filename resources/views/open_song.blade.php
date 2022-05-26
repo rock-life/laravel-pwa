@@ -58,10 +58,10 @@
                             <input type="button"  id="font" value="+">
                         </div>
                         <div class="components-action">
-                            <input type="hidden" value="{{$speed = 0}}">
+                            <input type="hidden" id="speed" value="{{$speed = 0}}">
                             <input type="button"  id="scroll-" value="-">
-                            <span>Прокрутити - {{$speed}}</span>
-                            <input type="button"  id="scroll+" value="+">
+                            <span id="pr">Прокрутити - {{$speed}}</span>
+                            <input type="button"  id="scroll" value="+">
                         </div>
                     </div>
                     @if($songDetail['video_of_song'] != null)
