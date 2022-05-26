@@ -48,11 +48,12 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
         Route::middleware(['role:administrator'])->group(function (){
             Route::get('/mod-songs', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
             Route::get('/mod-songs-page', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
-
 //            Route::any('/AminPanel', function (){
 //                return view('admin_panel.home');})->name('admin_panel');
         });
         Route::middleware(['role:moderator'])->group(function (){
+            Route::get('/mod-songs', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
+            Route::get('/mod-songs-page', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
 //            Route::any('/AminPanel', function (){
 //                return view('admin_panel.home');})->name('admin_panel');
         });

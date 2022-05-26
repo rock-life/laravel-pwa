@@ -471,15 +471,15 @@
     })
 
     $('#pre-page-manage').click(function (){
-        var pages = $('#next-page-manage').find(":selected").attr('page');
+        var pages = $('#next-page-manage').attr('page');
         var page = parseInt(pages) - 1;
         if (page > 0) {
-            $('#next-page-manage').find(":selected").attr('page', page);
+            $('#next-page-manage').attr('page', page);
             $.ajax({
                 type: "GET",
                 url: '/mod-songs-page',
                 data: {
-                    'page': $('#next-page-manage').find(":selected").attr('page')
+                    'page': $('#next-page-manage').attr('page')
                 },
             }).done(function (data) {
                 if (data.length > 0) {
@@ -490,21 +490,35 @@
     })
 
     $('#pre-page-manage').click(function (){
-        var pages = $('#next-page-manage').find(":selected").attr('page');
+        var pages = $('#next-page-manage').attr('page');
         var page = parseInt(pages) + 1;
-        $('#next-page-manage').find(":selected").attr('page', page);
+        $('#next-page-manage').attr('page', page);
 
         $.ajax({
             type: "GET",
             url: '/mod-songs-page',
             data: {
-                'page': $('#next-page-manage').find(":selected").attr('page')
+                'page': $('#next-page-manage').attr('page')
             },
         }).done(function (data) {
             if(data.length > 0) {
 
             }
         });
+    })
+
+    $('#delete').click(function (){
+        $.ajax({
+            type: "GET",
+            url: '/del-my-added-song',
+            data: {
+                'page': $('#delete').attr('id_song')
+            },
+        }).done(function (data) {
+            location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
     })
 
 
