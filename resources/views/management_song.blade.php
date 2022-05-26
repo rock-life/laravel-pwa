@@ -33,8 +33,8 @@
                 </table>
                 <div class="footer-action-page-song">
                     <div class="footer-action-buttons">
-                        <button id="pre-page-manage"  class="form-control footer-action-button">Попередня</button>
-                        <button id="next-page-manage" class="form-control footer-action-button">Наступна</button>
+                        <button id="pre-page-manage"  class="form-control footer-action-button" >Попередня</button>
+                        <button id="next-page-manage" class="form-control footer-action-button" page="1">Наступна</button>
                     </div>
                 </div>
             </div>

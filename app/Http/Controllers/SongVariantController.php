@@ -83,4 +83,15 @@ class SongVariantController extends Controller
 
         }
     }
+
+    public function getModSongs(){
+        $songs = $this->model->getModSongs();
+        return view('management_song', ['songs' => $songs]);
+    }
+    public function getModSongsAjax(Request $request){
+        if ($request->ajax()) {
+            $songs = $this->model->getModSongs($request->get('page'));
+            return response()->json(['songs' => $songs]);
+        }
+    }
 }

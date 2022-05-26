@@ -118,4 +118,15 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
         $this->songVariant->save();
 
     }
+
+    public function getModSongs($page = 0){
+        return SongVariant::query()
+            ->join('songs', 'songs.id', 'song_variant.id_song')
+            ->join('artist', 'artist.id', 'songs.id_artist')
+            ->join('form_of_writing', 'song_variant.id_form_of_writing', 'form_of_writing.id')
+            ->skip($page * 10)
+            ->take( 10)
+            ->get(['id','songs.name as name','artist.name as artist', 'song_variant.visibility'])
+            ->toArray();
+    }
 }

@@ -470,5 +470,42 @@
         $('#pr').html('Прокрутити - ' + String(speed));
     })
 
+    $('#pre-page-manage').click(function (){
+        var pages = $('#next-page-manage').find(":selected").attr('page');
+        var page = parseInt(pages) - 1;
+        if (page > 0) {
+            $('#next-page-manage').find(":selected").attr('page', page);
+            $.ajax({
+                type: "GET",
+                url: '/mod-songs-page',
+                data: {
+                    'page': $('#next-page-manage').find(":selected").attr('page')
+                },
+            }).done(function (data) {
+                if (data.length > 0) {
+
+                }
+            });
+        }
+    })
+
+    $('#pre-page-manage').click(function (){
+        var pages = $('#next-page-manage').find(":selected").attr('page');
+        var page = parseInt(pages) + 1;
+        $('#next-page-manage').find(":selected").attr('page', page);
+
+        $.ajax({
+            type: "GET",
+            url: '/mod-songs-page',
+            data: {
+                'page': $('#next-page-manage').find(":selected").attr('page')
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+
+            }
+        });
+    })
+
 
 })(jQuery);
