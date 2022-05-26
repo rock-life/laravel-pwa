@@ -48,7 +48,9 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
         Route::get('/logout',[\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
         Route::middleware(['role:administrator'])->group(function (){
             Route::get('/mod-songs', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
-            Route::get('/mod-songs-page', [\App\Http\Controllers\SongVariantController::class, 'getModSongs'])->name('getModSongs');
+            Route::get('/mod-songs-page', [\App\Http\Controllers\SongVariantController::class, 'getModSongsAjax'])->name('getModSongs');
+            Route::get('/manage-users', [\App\Http\Controllers\UserController::class, 'manageUsers'])->name('manageUsers');
+            Route::get('/manage-users-page', [\App\Http\Controllers\UserController::class, 'manageUsersAjax'])->name('manageUsersAjax');
 //            Route::any('/AminPanel', function (){
 //                return view('admin_panel.home');})->name('admin_panel');
         });

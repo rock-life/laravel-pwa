@@ -74,4 +74,25 @@ class UsersRepository implements \Dotenv\Repository\RepositoryInterface
     {
         // TODO: Implement clear() method.
     }
+
+    public function getUsers($page = 0)
+    {
+      return User::query()
+          ->join('roles', 'roles.id', '=', 'users.id_role')
+          ->orderBy('id', 'desc')
+          ->skip($page * 10)
+          ->take( 10)
+          ->get('')->toArray();
+    }
+    public function getModSongs($page = 0){
+        return SongVariant::query()
+            ->join('songs', 'songs.id', 'song_variant.id_song')
+            ->join('artist', 'artist.id', 'songs.id_artist')
+            ->join('form_of_writing', 'song_variant.id_form_of_writing', 'form_of_writing.id')
+            ->orderBy('id', 'desc')
+            ->skip($page * 10)
+            ->take( 10)
+            ->get(['id','songs.name as name','artist.name as artist', 'song_variant.visibility'])
+            ->toArray();
+    }
 }

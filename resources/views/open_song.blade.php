@@ -12,6 +12,7 @@
                 <a>{{$name}} </a>
             </span>
                 <div>
+                    @administrator
                     <input type="button"  class="form-control footer-action-button" id="delete" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
                     @endadministrator
                     <a href="{{route('editSongPage', ['id' => $songDetail['id']])}}" class="form-control footer-action-button" id_song="{{$songDetail['id']}}" > Редагувати </a>

@@ -22,7 +22,7 @@
                         <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin_panel')}}">{{__('Керування акаунтами')}}</a>
+                        <a class="nav-link" href="{{route('manageUsers')}}">{{__('Керування акаунтами')}}</a>
                     </li>
                     @endadministrator
             <li>

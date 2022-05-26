@@ -73,4 +73,15 @@ class UserController extends Controller
         return redirect()->intended();
     }
 
+    public function manageUsers(){
+        $usersList = $this->model->getUsers();
+        return view('manage_users', ['users' => $usersList]);
+    }
+    public function manageUsersAjax(Request $request){
+        if ($request->ajax()) {
+            $usersList = $this->model->getUsers($request->get('page'));
+            return response()->json(['users' => $usersList]);
+        }
+    }
+
 }
