@@ -512,7 +512,21 @@
             type: "GET",
             url: '/del-my-added-song',
             data: {
-                'page': $('#delete').attr('id_song')
+                'id': $('#delete').attr('id_song')
+            },
+        }).done(function (data) {
+            location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
+    })
+
+    $('#visibility').click(function (){
+        $.ajax({
+            type: "GET",
+            url: '/edit-visibility',
+            data: {
+                'id': $('#idSongVariant').attr('value')
             },
         }).done(function (data) {
             location.reload();

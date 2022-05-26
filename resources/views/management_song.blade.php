@@ -23,7 +23,7 @@
                         <tr>
                             <td><a href="{{route('getArtistSongPage', ['id_artist' => $song->id_artist])}}">{{$song->artist}}</a></td>
                             <td><a href="{{route('getSongShow', ['id_song' => $song->id])}}">{{$song->name}}</a></td>
-                            <td> <input type="checkbox" {{$song->visibility}}/> </td>
+                            <td> <input id="visibility" type="checkbox" {{$song->visibility}}/> </td>
                             @administrator
                             <td> <input type="button"  class="form-control footer-action-button" id="delete" id_song="{{$song->id}}" value="Видалити"/> </td>
                             @endadministrator
