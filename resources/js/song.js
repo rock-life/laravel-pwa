@@ -442,6 +442,19 @@
         }
     })
 
+    $('#font').click(function (){
+        var size = $('#text-song').css('font-size');
+        size.replace('px', '');
+        var size = parseInt(size) + 1;
+        $('#text-song').css('font-size', String(size) + 'px');
+    })
+    $('#font-').click(function (){
+        var size = $('#text-song').css('font-size');
+        size.replace('px', '');
+        var size = parseInt(size)-1;
+        $('#text-song').css('font-size', String(size) + 'px');
+    })
+
 
 
 })(jQuery);

@@ -42,7 +42,7 @@
             </div>
             <div class="song-show">
                 <div class="add-song-field">
-                    <pre id="text-song">{{$text}}</pre>
+                    <pre style="font-size: 15px" id="text-song">{{$text}}</pre>
                 </div>
                 <div class="add-song-detail">
                 <div class="inputs">
@@ -55,11 +55,12 @@
                         <div class="components-action">
                             <input type="button"  id="font-" value="-">
                             <span>Шрифт</span>
-                            <input type="button"  id="font+" value="+">
+                            <input type="button"  id="font" value="+">
                         </div>
                         <div class="components-action">
+                            <input type="hidden" value="{{$speed = 0}}">
                             <input type="button"  id="scroll-" value="-">
-                            <span>Прокрутити</span>
+                            <span>Прокрутити - {{$speed}}</span>
                             <input type="button"  id="scroll+" value="+">
                         </div>
                     </div>
