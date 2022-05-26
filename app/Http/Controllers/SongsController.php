@@ -126,4 +126,12 @@ class SongsController extends Controller
         return view('my_added_song', ['result' => $data]);
     }
 
+    public function search(Request $request){
+        $song = $this->model->getSearchSongsFrom($request->get('search-value')) ;
+        return view('songs',[
+            'songs' => $song,
+            'namePage' => 'Результат пошуку'
+        ]);
+    }
+
 }

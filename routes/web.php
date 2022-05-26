@@ -26,6 +26,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/songs',[\App\Http\Controllers\SongsController::class, 'getSongPage'])->name('getSongPage');
     Route::get('/artist-songs/{id_artist}',[\App\Http\Controllers\SongsController::class, 'getArtistSongPage'])->name('getArtistSongPage');
     Route::get('/get_song/{id_song}', [\App\Http\Controllers\SongsController::class, 'getSongShow'])->name('getSongShow');
+    Route::post('/search', [\App\Http\Controllers\SongsController::class, 'search'])->name('search');
 
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');

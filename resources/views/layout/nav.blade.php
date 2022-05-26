@@ -78,8 +78,9 @@
                         <a class="nav-link" href="#">Категорії</a>
                     </li>
                     <li>
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <form class="d-flex" action="{{route('search')}}" method="post">
+                            @csrf
+                            <input class="form-control me-2" type="search" placeholder="Пошук" name="search-value" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Пошук</button>
                         </form>
                     </li>
