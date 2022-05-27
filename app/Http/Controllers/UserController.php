@@ -84,4 +84,9 @@ class UserController extends Controller
         }
     }
 
+    public function searchUsers(Request $request){
+        $users = $this->model->getUser($request->get('search-value'));
+        return view('manage_users', ['users' => $users]);
+    }
+
 }

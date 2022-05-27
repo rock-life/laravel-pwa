@@ -489,7 +489,7 @@
         }
     })
 
-    $('#pre-page-manage').click(function (){
+    $('#next-page-manage').click(function (){
         var pages = $('#next-page-manage').attr('page');
         var page = parseInt(pages) + 1;
         $('#next-page-manage').attr('page', page);

@@ -82,7 +82,7 @@ class UsersRepository implements \Dotenv\Repository\RepositoryInterface
           ->orderBy('id', 'desc')
           ->skip($page * 10)
           ->take( 10)
-          ->get('')->toArray();
+          ->get(['user.id as id',' user.login as login', 'user.email as email', 'roles.id as rolesId, roles.name as role '])->toArray();
     }
     public function getModSongs($page = 0){
         return SongVariant::query()
@@ -94,5 +94,15 @@ class UsersRepository implements \Dotenv\Repository\RepositoryInterface
             ->take( 10)
             ->get(['id','songs.name as name','artist.name as artist', 'song_variant.visibility'])
             ->toArray();
+    }
+
+    public function getUser($value): array
+    {
+        return User::query()
+            ->join('roles', 'roles.id', '=', 'users.id_role')
+            ->where('login', 'like', $value)
+            ->orWhere('email', 'like', $value)
+            ->get(['user.id as id',' user.login as login', 'user.email as email', 'roles.id as rolesId, roles.name as role '])->toArray();
+
     }
 }
