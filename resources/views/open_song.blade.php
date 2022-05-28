@@ -11,11 +11,13 @@
                 -
                 <a>{{$name}} </a>
             </span>
-                <div>
+                <div id="open_song_action">
                     @administrator
-                    <input type="button"  class="form-control footer-action-button" id="delete" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
+                    <input type="button"  class="form-control footer-action-button" id="delete_open" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
                     @endadministrator
+                    @canEdit($songDetail['id_user'])
                     <a href="{{route('editSongPage', ['id' => $songDetail['id']])}}" class="form-control footer-action-button" id_song="{{$songDetail['id']}}" > Редагувати </a>
+                    @endcanEdit
                     <select id="variant" name="variant">
                         @if(!is_array($OthersVariant))
                             {{$OthersVariant}}

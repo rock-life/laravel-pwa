@@ -69,6 +69,7 @@ class SongsController extends Controller
         }
         return view('open_song',
             [
+                'id_user' => $songDetail['id_user'],
                 'songDetail' => $songDetail,
                 'types' => $types,
                 'name' => $name,

@@ -175,3 +175,19 @@ table td {
     margin-left: 10px;
 }
 
+#open_song_action{
+    display: flex;
+}
+#open_song_action a{
+    height: 20px;
+    margin: 5px;
+    font-size: inherit;
+    padding: inherit;
+}
+#open_song_action input{
+     height: 20px;
+    margin: 5px;
+    font-size: inherit;
+    padding: inherit;
+}
+

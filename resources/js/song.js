@@ -455,20 +455,30 @@
         $('#text-song').css('font-size', String(size) + 'px');
     })
 
+    var speed = 0;
+
     $('#scroll').click(function (){
         var temp = $('#speed').attr('value');
-        var speed = parseInt(temp) + 1;
-        $('#speed').attr('value', speed)
-        $("html, body").animate({ scrollTop: $(window).height()}, $('#speed').attr('value'));
-        $('#pr').html('Прокрутити - ' + String(speed));
+        var speed1 = parseInt(temp) + 1;
+        $('#speed').attr('value', speed1);
+        $('#pr').html('Прокрутити - ' + String(speed1));
+        speed = speed1;
     })
     $('#scroll-').click(function (){
         var temp = $('#speed').attr('value');
-        var speed = parseInt(temp) - 1;
-        $('#speed').attr('value', speed)
-        $("html, body").animate({ scrollTop: $(window).height()}, $('#speed').attr('value'));
-        $('#pr').html('Прокрутити - ' + String(speed));
+        var speed1 = parseInt(temp) - 1;
+        if (speed1 >=0 ) {
+            $('#speed').attr('value', speed1);
+            $('#pr').html('Прокрутити - ' + String(speed1));
+            speed = speed1;
+            scrolling(speed)
+        }
     })
+
+    setInterval(function (){
+        var y = $(window).scrollTop();
+        $(window).scrollTop(y+speed);
+    }, 1000, [speed]);
 
     $('#pre-page-manage').click(function (){
         var pages = $('#next-page-manage').attr('page');
@@ -516,6 +526,20 @@
             },
         }).done(function (data) {
             location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
+    })
+
+    $('#delete_open').click(function (){
+        $.ajax({
+            type: "GET",
+            url: '/del-my-added-song',
+            data: {
+                'id': $('#delete').attr('id_song')
+            },
+        }).done(function (data) {
+            location.href = '/songs';
         }).fail(function (data){
             alert(data);
         }) ;
