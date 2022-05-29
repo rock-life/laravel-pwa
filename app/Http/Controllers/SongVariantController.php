@@ -77,6 +77,11 @@ class SongVariantController extends Controller
         }
     }
 
+    public function delSong($request){
+        $result = $this->model->delMyAddedSong($request);
+        return redirect('/mod-songs');
+    }
+
     public function editMyAddedSong(Request $request){
         $song = $this->model->editSong($request);
         return redirect()->route(
@@ -103,8 +108,8 @@ class SongVariantController extends Controller
     public function editSongVisibility(Request $request){
         if ($request->ajax()) {
             try {
-                $this->model->editSongVisibility($request->get('id'));
-                return response()->json(['result' => true]);
+                $r =$this->model->editSongVisibility($request->get('id'));
+                return response()->json(['result' => $r]);
             } catch (\Exception $e){
                 return response()->json(['result' => $e->getMessage()]);
             }
@@ -119,7 +124,7 @@ class SongVariantController extends Controller
     public function getModSongsAjax(Request $request){
         if ($request->ajax()) {
             $songs = $this->model->getModSongs($request->get('page'));
-            return response()->json(['songs' => $songs]);
+            return response()->json($songs);
         }
     }
 }

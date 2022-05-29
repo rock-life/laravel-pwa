@@ -23,7 +23,7 @@
                         '            </tr>';
                     $('#songs-list').html(text);
                 }
-                if (data.length<10)
+                if (data.length=0)
                     $('#next-page').attr('page', page-1);
             }
         }).fail(function (e){
@@ -54,7 +54,7 @@
                             '            </tr>';
                         $('#songs-list').html(text);
                     }
-                    if (data.length<10)
+                    if (data.length=0)
                         $('#next-page').attr('page', page-1);
                 }
             }).fail(function (e){
@@ -601,7 +601,7 @@
                             '            </tr>';
                         $('#songs-list').html(text);
                     }
-                    if (data.length<10)
+                    if (data.length=0)
                         $('#next-page').attr('page', page-1);
                 }
             }).fail(function (e){
@@ -633,7 +633,7 @@
                         '            </tr>';
                         $('#songs-list').html(text);
                     }
-                    if (data.length<10)
+                    if (data.length=0)
                         $('#next-page').attr('page', page-1);
                 }
             }).fail(function (e){
@@ -647,6 +647,19 @@
             url: '/del-my-added-song',
             data: {
                 'id': $('#delete').attr('id_song')
+            },
+        }).done(function (data) {
+            location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
+    })
+    $('body').on('click', '.delete', function (){
+        $.ajax({
+            type: "GET",
+            url: '/del-my-added-song',
+            data: {
+                'id': $(this).attr('id_song')
             },
         }).done(function (data) {
             location.reload();
@@ -707,6 +720,9 @@
 
     if (location.href.indexOf('get_song') >= 0){
         $('#type-header').change();
+    }
+    if (location.href.indexOf('song-artist') >= 0){
+        $('.footer-action-page-song').attr('hidden', true);
     }
     if (location.href.indexOf('search') >= 0){
         $('.footer-action-page-song').attr('hidden', true);
@@ -770,7 +786,7 @@
                 }
                 $('#songs-list').html(text);
 
-                if (data.length<10)
+                if (data.length=0)
                     $('#next-page').attr('page', page-1);
             }
         }).fail(function (e){
@@ -817,7 +833,179 @@
                             '                        </tr> ';
                     }
                     $('#songs-list').html(text);
-                    if (data.length<10)
+                    if (data.length=0)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
+    })
+
+
+
+
+
+    $('#pre-page-manageM').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) - 1;
+
+        if (page <= 0)
+            page = 0;
+        $.ajax({
+            type: "GET",
+            url: '/mod-songs-page',
+            data: {
+                'page': page
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+                $('#next-page').attr('page', page);
+                var text = '<tr>\n' +
+                    '                        <td>Виконавець</td>\n' +
+                    '                        <td>Пісня</td>\n' +
+                    '                        <td>Опубліковано</td>\n' +
+                    '                        <td></td>\n' +
+                    '                        <td></td>\n' +
+                    '                        <td></td>\n' +
+                    '                    </tr>';
+                for(var i = 0; data.length>i; i++){
+                    var song = data[i];
+                    if (song['visibility'])
+                        var ch = 'checked'
+                    else
+                        var ch = '';
+                    text +=' <tr>\n' +
+                        '                            <td><a href="/song-artist/'+song['artistId']+'">'+song['artist']+'</a></td>\n' +
+                        '                            <td ><a href="/show-song/'+ song['id']+'/'+song['variantId']+'/'+song['form_of_writingId']+'">'+song['name']+'</a></td>\n' +
+                        '                                <td> <input class="visibility" value="'+song['variantId']+'" type="checkbox" '+ ch +'/> </td>\n' +
+                        '                            <td> '+song['form_of_writing']+' </td>\n' +
+                        '                            <td> <a href="/del-song/'+song['variantId']+'"  class="form-control footer-action-button" >Видалити</a> </td>\n' +
+                        '                            <td> <a href="/edit-song-page/'+ song['variantId']+'" class="form-control footer-action-button" id_song="'+song['variantId']+'" > Редагувати </a> </td>\n' +
+                        '                        </tr>';
+                    $('#songs-show').html(text);
+                }
+                if (data.length=0)
+                    $('#next-page').attr('page', page-1);
+            }
+        }).fail(function (e){
+            console.log(e);
+        });
+    })
+
+    $('#next-page-manageM').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) + 1;
+
+        if (page > 0)
+            $.ajax({
+                type: "GET",
+                url: '/mod-songs-page',
+                data: {
+                    'page': page
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr>\n' +
+                        '                        <td>Виконавець</td>\n' +
+                        '                        <td>Пісня</td>\n' +
+                        '                        <td>Опубліковано</td>\n' +
+                        '                        <td></td>\n' +
+                        '                        <td></td>\n' +
+                        '                        <td></td>\n' +
+                        '                    </tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        if (song['visibility'])
+                            var ch = 'checked'
+                        else
+                            var ch = '';
+                        text +=' <tr>\n' +
+                            '                            <td><a href="/song-artist/'+song['artistId']+'">'+song['artist']+'</a></td>\n' +
+                            '                            <td ><a href="/show-song/'+ song['id']+'/'+song['variantId']+'/'+song['form_of_writingId']+'">'+song['name']+'</a></td>\n' +
+                        '                                <td> <input class="visibility" value="'+song['variantId']+'" type="checkbox" '+ ch +'/> </td>\n' +
+                            '                            <td> '+song['form_of_writing']+' </td>\n' +
+                            '                            <td> <a href="/del-song/'+song['variantId']+'"  class="form-control footer-action-button" >Видалити</a> </td>\n' +
+                            '                            <td> <a href="/edit-song-page/'+ song['variantId']+'" class="form-control footer-action-button" id_song="'+song['variantId']+'" > Редагувати </a> </td>\n' +
+                            '                        </tr>';
+                        $('#songs-show').html(text);
+                    }
+                    if (data.length=0)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
+    })
+
+    $('body').on('click', '.visibility', function (){
+        $.ajax({
+            type: "GET",
+            url: '/edit-visibility',
+            data: {
+                'id': $(this).attr('value')
+            },
+        }).done(function (data) {
+            location.reload();
+        }).fail(function (data){
+            alert(data);
+        }) ;
+    })
+
+
+    $('#pre-artist').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) - 1;
+        if (page <= 0)
+            page = 0;
+        $.ajax({
+            type: "GET",
+            url: '/artists-aj',
+            data: {
+                'page': page
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+                $('#next-page').attr('page', page);
+                var text = '';
+                for(var i = 0; data.length>i; i++){
+                    var song = data[i];
+                    text += ' <tr>\n' +
+                        '       <td><a href="/song-artist/'+song['id']+'">'+song['name']+'</a></td>\n' +
+                    '         </tr>';
+                    $('#songs-list').html(text);
+                }
+                if (data.length=0)
+                    $('#next-page').attr('page', page-1);
+            }
+        }).fail(function (e){
+            console.log(e);
+        });
+    })
+
+    $('#next-artist').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) + 1;
+
+        if (page > 0)
+            $.ajax({
+                type: "GET",
+                url: '/artists-aj',
+                data: {
+                    'page': page
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        text += ' <tr>\n' +
+                            '       <td><a href="/song-artist/'+song['id']+'">'+song['name']+'</a></td>\n' +
+                            '         </tr>';
+                        $('#songs-list').html(text);
+                    }
+                    if (data.length=0)
                         $('#next-page').attr('page', page-1);
                 }
             }).fail(function (e){
@@ -826,3 +1014,4 @@
     })
 
 })(jQuery);
+

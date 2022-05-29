@@ -12,11 +12,6 @@
             </li>
             @endguest
             @auth()
-                    @moderator
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
-                    </li>
-                    @endmoderator
                     @administrator
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
@@ -25,6 +20,11 @@
                         <a class="nav-link" href="{{route('manageUsers')}}">{{__('Керування акаунтами')}}</a>
                     </li>
                     @endadministrator
+                    @moderator
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('getModSongs')}}">{{__('Керування піснями')}}</a>
+                    </li>
+                    @endmoderator
             <li>
                 <a href="{{route('getSavedSong')}}">Збереженні</a>
             </li>
@@ -69,7 +69,7 @@
                         <a class="nav-link" href="{{route('add_new_song')}}">Додати розбір</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Виконавці</a>
+                        <a class="nav-link" href="{{route('getPageArtist')}}">Виконавці</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('getSongPage')}}">Всі пісні</a>

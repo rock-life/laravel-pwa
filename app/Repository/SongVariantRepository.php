@@ -103,13 +103,14 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function editSongVisibility($get)
     {
-        $this->songVariant = SongVariant::query()->where('id', '=', $get)->getModel();
-        if ($this->songVariant->visibility == true) {
-            $this->songVariant->visibility = false;
-        } else {
-            $this->songVariant->visibility = true;
-        }
-        $this->songVariant->save();
+        $v = SongVariant::query()->where('id', '=', $get)->get(['visibility'])->toArray()[0]['visibility'];
+        if ($v == true)
+            $v = false;
+        else
+            $v = true;
+        SongVariant::query()->where('id', '=', $get)->update([
+            'visibility' => $v
+        ]);
 
     }
 
@@ -118,10 +119,10 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             ->join('songs', 'songs.id', 'song_variant.id_song')
             ->join('artist', 'artist.id', 'songs.id_artist')
             ->join('form_of_writing', 'song_variant.id_form_of_writing', 'form_of_writing.id')
-            ->orderBy('id', 'desc')
+            ->orderBy('song_variant.id', 'desc')
             ->skip($page * 10)
             ->take( 10)
-            ->get(['id','songs.name as name','artist.name as artist', 'song_variant.visibility'])
+            ->get(['songs.id as id','song_variant.id as variantId','songs.name as name','artist.name as artist','artist.id as artistId','form_of_writing.name as form_of_writing' , 'form_of_writing.id as form_of_writingId' , 'song_variant.visibility'])
             ->toArray();
     }
 

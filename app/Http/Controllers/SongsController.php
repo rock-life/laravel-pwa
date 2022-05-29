@@ -170,5 +170,24 @@ class SongsController extends Controller
         'namePage' => 'Результат пошуку'
     ]);
 }
+public function getPageArtist(){
+    $song = $this->model->getAllArtistFrom(0) ;
+    return view('artists',[
+        'artists' => $song,
+        'namePage' => 'Усі Виконавці'
+    ]);
+}
+
+public function getPageArtistAj(Request $request){
+    if ($request->ajax()){
+        try {
+            $song = $this->model->getAllArtistFrom($request->get('page')) ;
+            return response($song);
+        } catch (\Exception $e){
+            return response($e->getMessage());
+        }
+
+    }
+}
 
 }

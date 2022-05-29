@@ -202,4 +202,14 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         }
         return $songsValue;
     }
+
+    public function getAllArtistFrom(int $page)
+    {
+        $art = Artist::query()
+            ->orderBy('id')
+            ->skip($page * 10)
+            ->take( 10)
+            ->get(['artist.name as name','artist.id as id'])->toArray();
+        return $art;
+    }
 }

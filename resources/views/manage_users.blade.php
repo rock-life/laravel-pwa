@@ -9,11 +9,6 @@
                 Керування користувачами
                 </span>
                 <div>
-                    <form class="d-flex" id="open_song_action" action="{{route('searchUsers')}}" method="post">
-                        @csrf
-                        <input class="form-control me-2" type="search" placeholder="Пошук" name="search-value" title="Пошук по логіну або email" aria-label="Search">
-                        <input class="btn btn-outline-success" type="submit" value="Пошук"/>
-                    </form>
                 </div>
             </div>
             <div class="songs-show">
