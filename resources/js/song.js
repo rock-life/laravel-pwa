@@ -1,4 +1,5 @@
 (function($) {
+
     $('#type-header').change( function (){
         $.ajax({
             type: "GET",
@@ -21,10 +22,19 @@
             })
             if (buttons == '') {
                 $('#variant').attr('hidden', true);
+                $('#song-show').attr('hidden', false);
+                $('#delete_open').attr('hidden', true);
+                $('#edit_open').attr('hidden', true);
+                $('.song-show').attr('hidden', true);
             } else {
                 $('#variant').attr('hidden', false);
                 $('#variant').html(buttons);
                 $('#variant').change();
+                $('#delete_open').attr('hidden', false);
+                $('.song-show').attr('hidden', false);
+                $('#edit_open').attr('hidden', false);
+                $('#song-show').attr('hidden', false);
+                $('#open_song_action').attr('hidden', false);
             }
         }).fail(function (e){
             if ($('#type-header').find(":selected").attr('value') == 2) {
@@ -33,10 +43,14 @@
             else {
                 $('#action-ton').attr('hidden', false);
             }
+            $('#delete_open').attr('hidden', true);
+            $('#edit_open').attr('hidden', true);
+            $('.song-show').attr('hidden', true);
             $('#variant').attr('hidden', true);
             console.log(e);
         });
     })
+    $('#type-header').change();
 
     $('#variant').change( function (){
         $.ajax({
@@ -46,6 +60,19 @@
                 'id': $('#variant').find(":selected").attr('value'),
             },
         }).done(function (data) {
+            $.ajax({
+                type: "GET",
+                url: '/can-edit',
+                data: {
+                    'id': $('#variant').find(":selected").attr('value'),
+                },
+            })
+                .done(function (data){
+                    if (data == true)
+                        $('#edit_open').attr('hidden', false);
+                    else
+                        $('#edit_open').attr('hidden', true);
+                })
             $('#text-song').html(data['text']);
             if (data['video_of_song']!=null){
                 $('#video_of_song').attr('hidden',false);
@@ -536,13 +563,16 @@
             type: "GET",
             url: '/del-my-added-song',
             data: {
-                'id': $('#delete').attr('id_song')
+                'id': $('#variant').find(":selected").attr('value')
             },
         }).done(function (data) {
             location.href = '/songs';
         }).fail(function (data){
             alert(data);
         }) ;
+    })
+    $('#edit_open').click(function (){
+        location.href = '/edit-song-page/' + $('#variant').find(":selected").attr('value');
     })
 
     $('#visibility').click(function (){

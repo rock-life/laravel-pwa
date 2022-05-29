@@ -23,6 +23,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/show-song/{id_song}/{id_song_variant}/{type}', [\App\Http\Controllers\SongsController::class, 'getSong'])->name('getSong');
     Route::get('/variant', [\App\Http\Controllers\SongVariantController::class, 'getVariantSong'])->name('getVariantSong');
     Route::get('/variant-text', [\App\Http\Controllers\SongVariantController::class, 'getVariantTextSong'])->name('getVariantTextSong');
+    Route::get('/can-edit', [\App\Http\Controllers\SongVariantController::class, 'canEdit']);
     Route::get('/songs',[\App\Http\Controllers\SongsController::class, 'getSongPage'])->name('getSongPage');
     Route::get('/get_song/{id_song}', [\App\Http\Controllers\SongsController::class, 'getSongShow'])->name('getSongShow');
     Route::post('/search', [\App\Http\Controllers\SongsController::class, 'search'])->name('search');

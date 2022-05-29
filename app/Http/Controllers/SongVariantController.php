@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\SongVariant;
+use App\Repository\FormOfWritingRepository;
+use App\Repository\GenreRepository;
 use App\Repository\SongVariantRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,28 +13,53 @@ class SongVariantController extends Controller
 {
 
     public $model;
+    public $genre;
+    public $form;
 
     public function __construct(SongVariant $model){
         $this->model=new SongVariantRepository($model);
+        $this->genre = new GenreRepository();
+        $this->form = new FormOfWritingRepository();
+    }
+
+    public function canEdit(Request $request){
+        if ($request->ajax()){
+            return $this->model->canEdit($request->get('id'));
+        }
     }
 
     public function getVariantSong(Request $request){
-        if ($request->ajax()){
-            $typeValue = [];
-            foreach ($this->model->getOpenVariantByIdType($request->get('id'),$request->get('type')) as $key => $variant){
-                if (Auth::id() != null) {
-                    if($variant['id_user'] == Auth::id()){
-                        $typeValue += [$key++ => $variant['id']];
-                    } else if ($variant['visibility'] == 1){
-                        $typeValue += [$key++ => $variant['id']];
-                    }
-                } else{
-                    if ($variant['visibility'] == 1){
-                        $typeValue += [$key++ => $variant['id']];
+        try {
+            if ($request->ajax()) {
+                $typeValue = [];
+                foreach ($this->model->getOpenVariantByIdType($request->get('id'), $request->get('type')) as $key => $variant) {
+                    if (Auth::id() != null) {
+                        if ($variant['id_user'] == Auth::id() || Auth::user()->id_role > 1) {
+                            $typeValue += [$key++ => $variant['id']];
+                        } else if ($variant['visibility'] == 1) {
+                            $typeValue += [$key++ => $variant['id']];
+                        }
+                    } else {
+                        if ($variant['visibility'] == 1) {
+                            $typeValue += [$key++ => $variant['id']];
+                        }
                     }
                 }
+                ini_set("log_errors", TRUE);
+                ini_set('error_log', 'test.log');
+                $messagelog =__FILE__.' - '.__LINE__.' :'. var_export($typeValue,true);
+                error_log($messagelog);
+                return response()->json($typeValue);
             }
-            return response()->json($typeValue);
+        } catch (\Exception $exception){
+            ini_set("log_errors", TRUE);
+            ini_set('error_log', 'test.log');
+            $messagelog =__FILE__.' - '.__LINE__.' :'. var_export($typeValue,true);
+            error_log($messagelog);
+            ini_set("log_errors", TRUE);
+            ini_set('error_log', 'test.log');
+            $messagelog =__FILE__.' - '.__LINE__.' :'.$exception->getMessage().$exception->getFile().$exception->getLine();
+            error_log($messagelog);
         }
     }
 
@@ -55,21 +82,26 @@ class SongVariantController extends Controller
     }
 
     public function editMyAddedSong(Request $request){
-        $request->validated();
         $song = $this->model->editSong($request);
         return redirect()->route(
             'getSong',
             [
-                'id_song' => $song->id_song,
-                'id_song_variant' => $song->id,
-                'type' => $request->get('type')
+                'id_song' => $song['id_song'],
+                'id_song_variant' => $song['id'],
+                'type' => $song['id_form_of_writing']
             ]
         );
     }
 
     public function editSongPage($id){
+        $types = $this->form->getAll();
+        $categorys = $this->genre->getAll();
         $result = $this->model->getSongVariant($id);
-        return view('edit_song',['data_song' => $result]);
+        return view('edit_song',[
+            'data_song' => $result[0],
+            'types' => $types,
+            'categorys' => $categorys
+        ]);
     }
 
     public function editSongVisibility(Request $request){

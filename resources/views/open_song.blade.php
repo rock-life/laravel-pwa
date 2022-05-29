@@ -16,7 +16,7 @@
                     <input type="button"  class="form-control footer-action-button" id="delete_open" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
                     @endadministrator
                     @canEdit($songDetail['id_user'])
-                    <a href="{{route('editSongPage', ['id' => $songDetail['id']])}}" class="form-control footer-action-button" id_song="{{$songDetail['id']}}" > Редагувати </a>
+                    <input type="button" class="form-control footer-action-button" id="edit_open" id_song="{{$songDetail['id']}}" value="Редагувати"/>
                     @endcanEdit
                     <select id="variant" name="variant">
                         @if(!is_array($OthersVariant))
@@ -24,7 +24,18 @@
                             {!! '<option value="' . $OthersVariant . '">Варіант - ' . 1 . '</option>' !!}
                         @else
                             @foreach($OthersVariant as $key => $variant)
-                                @if($variant['visibility'] == false && \Illuminate\Support\Facades\Auth::id() == $variant['id_user'] || $variant['visibility'] == true)
+                                @if(auth()->user())
+                                    @if($variant['visibility'] == false && \Illuminate\Support\Facades\Auth::id() == $variant['id_user']
+                                            || auth()->user()->id_role > 1
+                                            || $variant['visibility'] == true)
+                                        {{$key +=1}}
+                                        @if($variant['id'] == $songDetail['id'])
+                                            {!! '<option selected value="' . $variant['id'] . '">Варіант - ' . $key . '</option>' !!}
+                                        @else
+                                            {!! '<option value="' . $variant['id'] . '">Варіант - ' . $key . '</option>' !!}
+                                        @endif
+                                    @endif
+                                @elseif($variant['visibility'] == true)
                                     {{$key +=1}}
                                     @if($variant['id'] == $songDetail['id'])
                                         {!! '<option selected value="' . $variant['id'] . '">Варіант - ' . $key . '</option>' !!}

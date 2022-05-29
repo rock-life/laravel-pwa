@@ -47,25 +47,17 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function getOpenVariantByIdType($id, $type){
         $SV = SongVariant::query()
+            ->join('users' , 'users.id', '=', 'song_variant.id_user')
             ->where('id_song', '=', $id)
             ->where('id_form_of_writing', '=', $type)
-            ->where('visibility', '=', true)
-            ->orWhere(function($query) use ($type, $id) {
-                $query->where('id_song', '=', $id)
-                    ->where('id_form_of_writing', '=', $type)
-                    ->where('visibility', '=', false)
-                    ->where('id_user', '=', Auth::id());
-            })
-            ->get();
-        if(!$SV->isEmpty()){
-            return $SV->toArray();
-        }
+            ->get(['song_variant.visibility as visibility', 'song_variant.id as id', 'song_variant.id_user as id_user', 'users.id_role as id_role'])->toArray();
+
+        return $SV;
     }
 
     public function getOpenVariantById($id){
         $SV = SongVariant::query()
             ->where('id', '=', $id)
-            ->where('visibility', '=', true)
             ->orWhere(function($query) use ($id) {
                 $query->where('id', '=', $id)
                     ->where('visibility', '=', false)
@@ -86,14 +78,15 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function editSong($data)
     {
-        $songVariant = SongVariant::query()->where('id', '=', $data->get('id_variant'))->getModel();
-        $songVariant->text = $data->get('text-edit-song');
-        $songVariant->visibility = false;
-        $songVariant->video_of_song = $data->get('url_song');
-        $songVariant->video_lesson = $data->get('url_lesson');
-        $songVariant->id_form_of_writing = $data->get('type');
-        $songVariant->save();
-        return $songVariant;
+        SongVariant::query()->where('id', '=', $data->get('id'))->update([
+            'text'=> $data->get('text-edit-song'),
+            'visibility' => false,
+            'video_of_song' => $data->get('url_song'),
+            'video_lesson' => $data->get('url_lesson'),
+            'id_form_of_writing' => $data->get('type')
+        ]);
+        $songVariant = SongVariant::query()->where('id', '=', $data->get('id'))->get()->toArray();
+        return $songVariant[0];
     }
 
     public function getSongVariant($id)
@@ -102,8 +95,8 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             ->join('songs', 'songs.id', 'song_variant.id_song')
             ->join('artist', 'artist.id', 'songs.id_artist')
             ->join('form_of_writing', 'song_variant.id_form_of_writing', 'form_of_writing.id')
-            ->where('id', '=', $id)
-            ->get(['id','songs.name as name','artist.name as artist', 'text', 'video_of_song', 'video_lesson', 'form_of_writing.name as form_of_writing'])
+            ->where('song_variant.id', '=', $id)
+            ->get(['song_variant.id','songs.name as name','artist.name as artist', 'text', 'video_of_song', 'video_lesson', 'form_of_writing.name as form_of_writing'])
             ->toArray();
     }
 
@@ -129,5 +122,14 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
             ->take( 10)
             ->get(['id','songs.name as name','artist.name as artist', 'song_variant.visibility'])
             ->toArray();
+    }
+
+    public function canEdit($get)
+    {
+        $id = SongVariant::query()->where('id', '=', $get)->get(['id_user as id'])->toArray()[0]['id'];
+        if ($id == Auth::id() || Auth::user()->id_role > 1)
+            return true;
+        else
+            return false;
     }
 }
