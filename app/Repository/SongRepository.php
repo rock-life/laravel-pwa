@@ -134,10 +134,14 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         return $song;
     }
 
-    public function getAllSongsFrom(){
+    public function getAllSongsFrom($page = 0){
         $songs = DB::table('songs')
             ->join('artist', 'artist.id', '=', 'songs.id_artist' )
-            ->select('songs.id','songs.name', 'artist.name as artist', 'songs.id_artist')->get()->toArray();
+            ->select('songs.id','songs.name', 'artist.name as artist', 'songs.id_artist')
+            ->orderBy('id', 'desc')
+            ->skip($page * 10)
+            ->take( 10)
+            ->get()->toArray();
         $songsValue = array();
         foreach ($songs as $song){
             $temp = SongVariant::query()

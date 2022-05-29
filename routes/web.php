@@ -25,9 +25,10 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/variant-text', [\App\Http\Controllers\SongVariantController::class, 'getVariantTextSong'])->name('getVariantTextSong');
     Route::get('/can-edit', [\App\Http\Controllers\SongVariantController::class, 'canEdit']);
     Route::get('/songs',[\App\Http\Controllers\SongsController::class, 'getSongPage'])->name('getSongPage');
+    Route::get('/next-page',[\App\Http\Controllers\SongsController::class, 'getSongPageAjax']);
     Route::get('/get_song/{id_song}', [\App\Http\Controllers\SongsController::class, 'getSongShow'])->name('getSongShow');
     Route::post('/search', [\App\Http\Controllers\SongsController::class, 'search'])->name('search');
-    Route::post('/song-artist\{id}', [\App\Http\Controllers\SongsController::class, 'songsArtist'])->name('songsArtist');
+    Route::post('/song-artist/{id}', [\App\Http\Controllers\SongsController::class, 'songsArtist'])->name('songsArtist');
 
     Route::group(['middleware' =>['guest']], function (){
         Route::get('/registration',[\App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('register.show');

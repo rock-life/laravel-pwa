@@ -1,5 +1,67 @@
 (function($) {
 
+    $('#next-songs').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) + 1;
+
+        if (page > 0)
+        $.ajax({
+            type: "GET",
+            url: '/next-page',
+            data: {
+                'page': page
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+                $('#next-page').attr('page', page);
+                var text = '<tr><td>Виконавець</td><td width="50%">Пісня</td></tr>';
+                for(var i = 0; data.length>i; i++){
+                    var song = data[i];
+                    text +=' <tr>\n' +
+                        '                <td><a href="/song-artist/'+ song.id_artist +'">' + song.artist + '</a></td>\n' +
+                        '                <td width="50%" ><a href="/get_song/'+ song.id +'">' + song.name + '</a></td>\n' +
+                        '            </tr>';
+                    $('#songs-list').html(text);
+                }
+                if (data.length<10)
+                    $('#next-page').attr('page', page-1);
+            }
+        }).fail(function (e){
+          console.log(e);
+        });
+    })
+    $('#pre-songs').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) - 1;
+
+        if (page <= 0)
+            page = 0;
+            $.ajax({
+                type: "GET",
+                url: '/next-page',
+                data: {
+                    'page': page
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr><td>Виконавець</td><td width="50%">Пісня</td></tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        text +=' <tr>\n' +
+                            '                <td><a href="/song-artist/'+ song.id_artist +'">' + song.artist + '</a></td>\n' +
+                            '                <td width="50%" ><a href="/get_song/{id_song}'+ song.id +'">' + song.name + '</a></td>\n' +
+                            '            </tr>';
+                        $('#songs-list').html(text);
+                    }
+                    if (data.length<10)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
+    })
+
     $('#type-header').change( function (){
         $.ajax({
             type: "GET",

@@ -47,7 +47,7 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function getOpenVariantByIdType($id, $type){
         $SV = SongVariant::query()
-            ->join('users' , 'users.id', '=', 'song_variant.id_user')
+            ->join('users' , 'users.id', '=', 'song_variant.id_user', 'left')
             ->where('id_song', '=', $id)
             ->where('id_form_of_writing', '=', $type)
             ->get(['song_variant.visibility as visibility', 'song_variant.id as id', 'song_variant.id_user as id_user', 'users.id_role as id_role'])->toArray();

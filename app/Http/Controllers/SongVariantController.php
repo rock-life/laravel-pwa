@@ -45,10 +45,6 @@ class SongVariantController extends Controller
                         }
                     }
                 }
-                ini_set("log_errors", TRUE);
-                ini_set('error_log', 'test.log');
-                $messagelog =__FILE__.' - '.__LINE__.' :'. var_export($typeValue,true);
-                error_log($messagelog);
                 return response()->json($typeValue);
             }
         } catch (\Exception $exception){

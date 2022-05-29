@@ -122,6 +122,23 @@ class SongsController extends Controller
             'namePage' => 'Усі пісні'
         ]);
     }
+    public function getSongPageAjax(Request $request){
+        if ($request->ajax()){
+            ini_set("log_errors", TRUE);
+            ini_set('error_log', 'test.log');
+            $messagelog =__FILE__.' - '.__LINE__.' :'.var_export(6,true);
+            error_log($messagelog);
+            try {
+                $song = $this->model->getAllSongsFrom($request->get('page')) ;
+                return response($song);
+            } catch (\Exception $e){
+                return response($e->getMessage());
+            }
+
+        }
+}
+
+
     public function getMyAddedSong(){
         $data = $this->model->getMyAddedSong();
         return view('my_added_song', ['result' => $data]);

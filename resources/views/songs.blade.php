@@ -9,7 +9,7 @@
                 </span>
             </div>
             <div class="songs-show">
-                <table>
+                <table id="songs-list">
                     <tr>
                         <td>Виконавець</td>
                         <td width="50%">Пісня</td>
@@ -23,8 +23,9 @@
                 </table>
                 <div class="footer-action-page-song">
                     <div class="footer-action-buttons">
-                        <button class="form-control footer-action-button">Попередня</button>
-                        <button class="form-control footer-action-button">Наступна</button>
+                        <input type="hidden" id="next-page" page="0">
+                        <button id="pre-songs" class="form-control footer-action-button">Попередня</button>
+                        <button id="next-songs" class="form-control footer-action-button">Наступна</button>
                     </div>
                 </div>
             </div>
