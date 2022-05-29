@@ -80,13 +80,24 @@ class UserController extends Controller
     public function manageUsersAjax(Request $request){
         if ($request->ajax()) {
             $usersList = $this->model->getUsers($request->get('page'));
-            return response()->json(['users' => $usersList]);
+            return response()->json($usersList);
         }
     }
 
     public function searchUsers(Request $request){
         $users = $this->model->getUser($request->get('search-value'));
         return view('manage_users', ['users' => $users]);
+    }
+
+    public function setModRole(Request $request){
+        if ($request->ajax()){
+            try {
+                $res = $this->model->setRole($request);
+                return response(['result' => $res]);
+            }catch (\Exception $e){
+                return response($e->getMessage());
+            }
+        }
     }
 
 }

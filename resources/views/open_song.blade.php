@@ -12,6 +12,14 @@
                 <a>{{$name}} </a>
             </span>
                 <div id="open_song_action">
+                    @auth()
+                    <span>Зберегти: </span>
+                    <input type="checkbox" id="saved"
+                    @if(!empty($saved))
+                        {{'checked'}}
+                    @endif
+                    >
+                    @endauth
                     @administrator
                     <input type="button"  class="form-control footer-action-button" id="delete_open" id_song="{{$songDetail['id']}}" value="Видалити"/> </td>
                     @endadministrator

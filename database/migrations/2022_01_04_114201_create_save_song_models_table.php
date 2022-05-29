@@ -15,7 +15,7 @@ class CreateSaveSongModelsTable extends Migration
     {
         Schema::create('saved_song', function (Blueprint $table) {
             $table->foreignId('id_user')->constrained('users');
-            $table->foreignId('id_song')->constrained('songs');
+            $table->foreignId('id_song')->constrained('song_variant');
         });
     }
 

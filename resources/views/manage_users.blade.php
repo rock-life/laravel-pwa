@@ -1,24 +1,23 @@
 @extends('layout.header')
 
 @section('content')
-    <input type="hidden" id="idSong" value="{{$idSong}}">
-    <input type="hidden" id="idSongVariant" value="{{$songDetail['id']}}">
+
     <div class="container song-add-container">
         <div class="content-song">
             <div class="header-content header-content-song">
                <span>
-                Керування піснями
+                Керування користувачами
                 </span>
                 <div>
-                    <form class="d-flex" action="{{route('searchUsers')}}" method="post">
+                    <form class="d-flex" id="open_song_action" action="{{route('searchUsers')}}" method="post">
                         @csrf
                         <input class="form-control me-2" type="search" placeholder="Пошук" name="search-value" title="Пошук по логіну або email" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Пошук</button>
+                        <input class="btn btn-outline-success" type="submit" value="Пошук"/>
                     </form>
                 </div>
             </div>
-            <div class="song-show">
-                <table>
+            <div class="songs-show">
+                <table  id="songs-list">
                     <tr>
                         <td>Логін</td>
                         <td>Пошта</td>
@@ -27,28 +26,27 @@
                     </tr>
                     @foreach($users as $user)
                         <tr>
-                            <td><input type="hidden" id="id_user" value="{{$user->id}}"><a >{{$user->login}}</a></td>
-                            <td><a >{{$user->email}}</a></td>
-                            <td> <select id="role">
-                                    @if($user->roleId == 1)
-                                        <option value="1" selected>Користувач</option>
-                                        <option value="2" >Модератор</option>
-                                    @elseif($user->roleId == 2)
-                                        <option value="1" >Користувач</option>
-                                        <option value="2" selected>Модератор</option>
+                            <td><input type="hidden" id="id_user" value="{{$user['id']}}"><a >{{$user['login']}}</a></td>
+                            <td><a >{{$user['email']}}</a></td>
+                            <td> <select class="role">
+                                    @if($user['roleId'] == 1)
+                                        <option id_user="{{$user['id']}}" value="1" selected>Користувач</option>
+                                        <option id_user="{{$user['id']}}" value="2" >Модератор</option>
+                                    @elseif($user['roleId'] == 2)
+                                        <option id_user="{{$user['id']}}" value="1" >Користувач</option>
+                                        <option id_user="{{$user['id']}}" value="2" selected>Модератор</option>
                                     @endif
                                 </select>
                             </td>
-                            @administrator
-                            <td> <input type="button"  class="form-control footer-action-button" id="delete" id_song="{{$song->id}}" value="Видалити"/> </td>
-                            @endadministrator
+                            <td> <input type="button"  class="form-control footer-action-button" id="deleteU" id_user="{{$user['id']}}" value="Видалити"/> </td>
                         </tr>
                     @endforeach
                 </table>
                 <div class="footer-action-page-song">
                     <div class="footer-action-buttons">
-                        <button id="pre-page-manage"  class="form-control footer-action-button" >Попередня</button>
-                        <button id="next-page-manage" class="form-control footer-action-button" page="1">Наступна</button>
+                        <input type="hidden" id="next-page" page="0">
+                        <button id="pre-page-manageU"  class="form-control footer-action-button" >Попередня</button>
+                        <button id="next-page-manageU" class="form-control footer-action-button">Наступна</button>
                     </div>
                 </div>
             </div>

@@ -50,7 +50,7 @@
                         var song = data[i];
                         text +=' <tr>\n' +
                             '                <td><a href="/song-artist/'+ song.id_artist +'">' + song.artist + '</a></td>\n' +
-                            '                <td width="50%" ><a href="/get_song/{id_song}'+ song.id +'">' + song.name + '</a></td>\n' +
+                            '                <td width="50%" ><a href="/get_song/'+ song.id +'">' + song.name + '</a></td>\n' +
                             '            </tr>';
                         $('#songs-list').html(text);
                     }
@@ -71,6 +71,7 @@
                 'type': $('#type-header').find(":selected").attr('value')
             },
         }).done(function (data) {
+            $('#saved').attr('hidden', true);
             if ($('#type-header').find(":selected").attr('value') == 2) {
                 $('#action-ton').attr('hidden', true);
             }
@@ -105,6 +106,7 @@
             else {
                 $('#action-ton').attr('hidden', false);
             }
+            $('#saved').attr('hidden', true);
             $('#delete_open').attr('hidden', true);
             $('#edit_open').attr('hidden', true);
             $('.song-show').attr('hidden', true);
@@ -127,14 +129,19 @@
                 data: {
                     'id': $('#variant').find(":selected").attr('value'),
                 },
-            })
-                .done(function (data){
+            }).done(function (data){
                     if (data == true)
                         $('#edit_open').attr('hidden', false);
                     else
                         $('#edit_open').attr('hidden', true);
                 })
             $('#text-song').html(data['text']);
+            if (data['id_song']!= null)
+                $('#saved').attr('checked', true);
+            else
+                $('#saved').attr('checked', false);
+            $('#saved').attr('hidden', false);
+
             if (data['video_of_song']!=null){
                 $('#video_of_song').attr('hidden',false);
                 var tag = '';
@@ -620,9 +627,9 @@
                     for(var i = 0; data.length>i; i++){
                         var song = data[i];
                         text +=' <tr>\n' +
-                            '                <td><a href="/song-artist/'+ song.artistId +'">' + song.nameArtist + '</a></td>\n' +
-                            '                <td width="50%" ><a href="/show-song/'+song.id +'/'+ song.song_variantId +'/'+ song.form_of_writingId +'">' + song.name + '</a></td>\n' +
-                            '                <td width="10%"><a href="edit-song-page/' + song.song_variantId + '" class="form-control footer-action-button" id_song="' + song.song_variantId + '"> Редагувати </a></td>' +
+                        '                <td><a href="/song-artist/'+ song.artistId +'">' + song.nameArtist + '</a></td>\n' +
+                        '                <td width="50%" ><a href="/show-song/'+song.id +'/'+ song.song_variantId +'/'+ song.form_of_writingId +'">' + song.name + '</a></td>\n' +
+                        '                <td width="10%"><a href="edit-song-page/' + song.song_variantId + '" class="form-control footer-action-button" id_song="' + song.song_variantId + '"> Редагувати </a></td>' +
                         '            </tr>';
                         $('#songs-list').html(text);
                     }
@@ -679,19 +686,143 @@
         }) ;
     })
 
-    $('#delete-saved').click(function (){
+    $('#saved').click(function (){
+        var i = $('#saved').is(":checked");
+        if(i == false)
+            var urls = '/del-save-song';
+        else
+            var urls = '/set-save-song';
         $.ajax({
             type: "GET",
-            url: '/del-save-song',
+            url: urls,
             data: {
-                'id': $('#delete-saved').attr('id_song')
-            },
+                'id':$('#variant').find(":selected").attr('value'),
+    },
         }).done(function (data) {
-            location.reload();
+            console.log(data);
         }).fail(function (data){
-            alert(data);
+            console.log(data);
         }) ;
     })
 
+    if (location.href.indexOf('get_song') >= 0){
+        $('#type-header').change();
+    }
+    if (location.href.indexOf('search') >= 0){
+        $('.footer-action-page-song').attr('hidden', true);
+    }
+
+    $('.role').change(function (){
+        var r = $(this).find(":selected").attr('value');
+        var u = $(this).find(":selected").attr('id_user');
+        $.ajax({
+            type: "GET",
+            url: '/mod-role',
+            data: {
+                'role':$(this).find(":selected").attr('value'),
+                'user':$(this).find(":selected").attr('id_user'),
+            },
+        }).done(function (data) {
+            console.log(data);
+        }).fail(function (data){
+            console.log(data);
+        }) ;
+    })
+
+    $('#pre-page-manageU').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) - 1;
+
+        if (page <= 0)
+            page = 0;
+        $.ajax({
+            type: "GET",
+            url: '/manage-users-page',
+            data: {
+                'page': page
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+                $('#next-page').attr('page', page);
+                var text = '<tr>\n' +
+                    '                        <td>Логін</td>\n' +
+                    '                        <td>Пошта</td>\n' +
+                    '                        <td>Роль</td>\n' +
+                    '                        <td></td>\n' +
+                    '                    </tr>';
+                for(var i = 0; data.length>i; i++){
+                    var user = data[i];
+                    if(user['roleId'] == 1){
+                        var opt = '<option id_user="'+user['id']+'" value="1" selected>Користувач</option>' +
+                            '<option id_user="'+user['id']+'" value="2" >Модератор</option>'
+                    } else{
+                        var opt = '<option id_user="'+user['id']+'" value="1">Користувач</option>' +
+                            '<option id_user="'+user['id']+'" value="2" selected>Модератор</option>'
+                    }
+                    text +='                        <tr>\n' +
+                        '                            <td><input type="hidden" id="id_user" value="'+user['id']+'"><a >'+user['login']+'</a></td>\n' +
+                        '                            <td><a >'+user['email']+'</a></td>\n' +
+                        '                            <td> <select class="role">\n' +
+                        '                                    '+ opt +
+                        '                                </select>\n' +
+                        '                            </td>\n' +
+                        '                        </tr> ';
+                }
+                $('#songs-list').html(text);
+
+                if (data.length<10)
+                    $('#next-page').attr('page', page-1);
+            }
+        }).fail(function (e){
+            console.log(e);
+        });
+    })
+
+    $('#next-page-manageU').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) + 1;
+
+        if (page > 0)
+            $.ajax({
+                type: "GET",
+                url: '/manage-users-page',
+                data: {
+                    'page': page
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr>\n' +
+                        '                        <td>Логін</td>\n' +
+                        '                        <td>Пошта</td>\n' +
+                        '                        <td>Роль</td>\n' +
+                        '                        <td></td>\n' +
+                        '                    </tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var user = data[i];
+                        if(user['roleId'] == 1){
+                            var opt = '<option id_user="'+user['id']+'" value="1" selected>Користувач</option>' +
+                            '<option id_user="'+user['id']+'" value="2" >Модератор</option>'
+                        } else{
+                            var opt = '<option id_user="'+user['id']+'" value="1">Користувач</option>' +
+                                '<option id_user="'+user['id']+'" value="2" selected>Модератор</option>'
+                        }
+                        text +='                        <tr>\n' +
+                            '                            <td><input type="hidden" id="id_user" value="'+user['id']+'"><a >'+user['login']+'</a></td>\n' +
+                            '                            <td><a >'+user['email']+'</a></td>\n' +
+                            '                            <td> <select class="role">\n' +
+                            '                                    '+ opt +
+                            '                                </select>\n' +
+                            '                            </td>\n' +
+                            '                        </tr> ';
+                    }
+                    $('#songs-list').html(text);
+                    if (data.length<10)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
+    })
 
 })(jQuery);

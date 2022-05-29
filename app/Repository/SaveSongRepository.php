@@ -53,17 +53,26 @@ class SaveSongRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function delSaveSong($id_sing){
         $this->SS = SavedSong::query()
+            ->where('id_user', '=', Auth::id())
+            ->where('id_song', '=', $id_sing)
+            ->delete();
+    }
+    public function isSaveSong($id_sing){
+    $this->SS = SavedSong::query()
         ->where('id_user', '=', Auth::id())
         ->where('id_song', '=', $id_sing)
-        ->delete();
-    }
+        ->get()->toArray();
+    return $this->SS;
+}
 
     public function getSaveSongs(){
         $result = $this->SS = SavedSong::query()
-            ->join('songs', 'saved_song.id_song', '=', 'songs.id' )
+            ->join('song_variant', 'saved_song.id_song', '=', 'song_variant.id' )
+            ->join('songs', 'song_variant.id_song', '=', 'songs.id' )
             ->join('artist','songs.id_artist', '=', 'artist.id' )
-        ->where('id_user', '=', Auth::id())
-        ->get(['saved_song.id_song as id', 'songs.name as name', 'artist.name as artist']);
+            ->join('form_of_writing', 'song_variant.id_form_of_writing', '=', 'form_of_writing.id' )
+        ->where('saved_song.id_user', '=', Auth::id())
+        ->get(['songs.id as id', 'songs.name as name','song_variant.id as id_song_variant' ,'artist.name as artist', 'artist.id as artistId', 'form_of_writing.name as form_of_writing' ,'form_of_writing.id as id_form_of_writing']);
         return $result->toArray();
     }
 }

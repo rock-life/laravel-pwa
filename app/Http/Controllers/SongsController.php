@@ -6,6 +6,7 @@ use App\Http\Requests\SongRequest;
 use App\Models\Songs;
 use App\Repository\FormOfWritingRepository;
 use App\Repository\GenreRepository;
+use App\Repository\SaveSongRepository;
 use App\Repository\SongRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,13 @@ class SongsController extends Controller
     public $model;
     public $genre;
     public $form;
+    public $SS;
 
     public function __construct(Songs $model){
         $this->model=new SongRepository($model);
         $this->genre = new GenreRepository();
         $this->form = new FormOfWritingRepository();
+        $this->SS = new SaveSongRepository();
     }
 
     public function getPageAddNewSong()
@@ -67,6 +70,7 @@ class SongsController extends Controller
         } else {
             abort('404');
         }
+        $saved = $this->SS->isSaveSong($song);
         return view('open_song',
             [
                 'id_user' => $songDetail['id_user'],
@@ -76,7 +80,8 @@ class SongsController extends Controller
                 'artist' => $artist,
                 'text' => $text,
                 'idSong' => $idSong,
-                'OthersVariant' => $idOthersVariants
+                'OthersVariant' => $idOthersVariants,
+                'saved' => $saved
             ]);
     }
 
@@ -99,7 +104,7 @@ class SongsController extends Controller
         } else {
             abort('404');
         }
-
+        $saved = $this->SS->isSaveSong($id_song_variant);
         if (Auth::id() == null) {
             return view('home',['message' =>  "Пісня додана і найближчим часом буде розглянута нашим адміністратором."]);
         }
@@ -111,7 +116,8 @@ class SongsController extends Controller
                         'artist' => $artist,
                         'text' => $text,
                         'idSong' => $idSong,
-                        'OthersVariant' => $idOthersVariants
+                        'OthersVariant' => $idOthersVariants,
+                        'saved' => $saved
                     ]);
     }
 

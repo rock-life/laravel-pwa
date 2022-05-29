@@ -172,7 +172,7 @@ class SongRepository implements \Dotenv\Repository\RepositoryInterface
         $songs = DB::table('songs')
             ->join('artist', 'artist.id', '=', 'songs.id_artist' )
             ->select('songs.id','songs.name', 'artist.name as artist', 'songs.id_artist')
-            ->where('name', 'like', $search)->get()->toArray();
+            ->where('songs.name', 'like', $search)->get()->toArray();
         $songsValue = array();
         foreach ($songs as $song){
             $temp = SongVariant::query()

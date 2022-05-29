@@ -57,11 +57,12 @@ class SongVariantRepository implements \Dotenv\Repository\RepositoryInterface
 
     public function getOpenVariantById($id){
         $SV = SongVariant::query()
+            ->join('saved_song', 'saved_song.id_user', '=',  Auth::id(), 'left', 'saved_song.id_song = song_variant.id')
             ->where('id', '=', $id)
             ->orWhere(function($query) use ($id) {
                 $query->where('id', '=', $id)
                     ->where('visibility', '=', false)
-                    ->where('id_user', '=', Auth::id());
+                    ->where('song_variant.id_user', '=', Auth::id());
             })
             ->first();
         return $SV->getAttributes();

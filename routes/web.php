@@ -55,6 +55,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
             Route::get('/manage-users', [\App\Http\Controllers\UserController::class, 'manageUsers'])->name('manageUsers');
             Route::get('/manage-users-page', [\App\Http\Controllers\UserController::class, 'manageUsersAjax'])->name('manageUsersAjax');
             Route::get('/search-users', [\App\Http\Controllers\UserController::class, 'searchUsers'])->name('searchUsers');
+            Route::get('/mod-role', [\App\Http\Controllers\UserController::class, 'setModRole'])->name('setRole');
 //            Route::any('/AminPanel', function (){
 //                return view('admin_panel.home');})->name('admin_panel');
         });

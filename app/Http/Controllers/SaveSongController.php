@@ -20,7 +20,7 @@ class SaveSongController extends Controller
         if ($request->ajax()){
             if(Auth::id() != null) {
                 try {
-                    $this->model->setSaveSong($request->get('id_song'));
+                    $this->model->setSaveSong($request->get('id'));
                 } catch (\Exception $e) {
                     return response()->json(['result' => $e->getMessage()]);
                 }
@@ -37,7 +37,7 @@ class SaveSongController extends Controller
     public function delSavedSong(Request $request){
         if ($request->ajax()) {
             try {
-                $this->model->gelSaveSongs($request->get('id_song'));
+                $this->model->delSaveSong($request->get('id'));
                 return response()->json(['result' => true]);
             } catch (\Exception $e){
                 return response()->json(['result' => $e->getMessage()]);
