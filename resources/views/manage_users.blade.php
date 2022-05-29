@@ -38,7 +38,6 @@
                                     @endif
                                 </select>
                             </td>
-                            <td> <input type="button"  class="form-control footer-action-button" id="deleteU" id_user="{{$user['id']}}" value="Видалити"/> </td>
                         </tr>
                     @endforeach
                 </table>
