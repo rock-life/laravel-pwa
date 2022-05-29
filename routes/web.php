@@ -20,6 +20,9 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
     Route::get('/new_song', [\App\Http\Controllers\SongsController::class, 'getPageAddNewSong'])->name('add_new_song');
     Route::get('/artists', [\App\Http\Controllers\SongsController::class, 'getPageArtist'])->name('getPageArtist');
     Route::get('/artists-aj', [\App\Http\Controllers\SongsController::class, 'getPageArtistAj'])->name('getPageArtistAj');
+    Route::get('/category', [\App\Http\Controllers\GenreController::class, 'getCategory'])->name('getCategory');
+    Route::get('/categorySong/{id}', [\App\Http\Controllers\GenreController::class, 'songsCategory'])->name('songsCategory');
+    Route::get('/categoryAS', [\App\Http\Controllers\GenreController::class, 'songsCategoryA']);
     Route::get('/get_all_artist', [\App\Http\Controllers\ArtistController::class, 'getArtistByLetters'])->name('get_all_artist');
     Route::post('/addSong', [\App\Http\Controllers\SongsController::class, 'addSongs'])->name('addSong');
     Route::get('/show-song/{id_song}/{id_song_variant}/{type}', [\App\Http\Controllers\SongsController::class, 'getSong'])->name('getSong');

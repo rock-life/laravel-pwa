@@ -62,6 +62,78 @@
             });
     })
 
+    $('#next-songsC').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) + 1;
+
+        if (page > 0)
+            $.ajax({
+                type: "GET",
+                url: '/categoryAS',
+                data: {
+                    'page': page,
+                    'id':$('#categ').attr('value')
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr>\n' +
+                        '                        <td>Виконавець</td>\n' +
+                        '                        <td width="50%">Пісня</td>\n' +
+                        '                        <td></td>\n' +
+                        '                    </tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        text +=' <tr>' +
+                            '       <td><a href="/song-artist/'+ song['artistId'] +'">'+song['artistName']+'</a></td>\n' +
+    '                               <td width="50%" ><a href="/get_song/'+ song['id']+'?id_song_variant='+ song['variantId'] +'&type='+song['id_form_of_writing']+'}">'+song['name']+'</a></td>\n' +
+                            '       <td ><a >'+song['name_form_of_writing']+'</a></td></tr>';
+                        $('#songs-list').html(text);
+                    }
+                    if (data.length=0)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
+    })
+    $('#pre-songsC').click(function (){
+        var pages = $('#next-page').attr('page');
+        var page = parseInt(pages) - 1;
+
+        if (page <= 0)
+            page = 0;
+        $.ajax({
+            type: "GET",
+            url: '/categoryAS',
+            data: {
+                'page': page,
+                'id':$('#categ').attr('value')
+            },
+        }).done(function (data) {
+            if(data.length > 0) {
+                $('#next-page').attr('page', page);
+                var text = '<tr>\n' +
+                    '                        <td>Виконавець</td>\n' +
+                    '                        <td width="50%">Пісня</td>\n' +
+                    '                        <td></td>\n' +
+                    '                    </tr>';
+                for(var i = 0; data.length>i; i++){
+                    var song = data[i];
+                    text +=' <tr>' +
+                        '       <td><a href="/song-artist/'+ song['artistId'] +'">'+song['artistName']+'</a></td>\n' +
+                        '                               <td width="50%" ><a href="/get_song/'+ song['id']+'?id_song_variant='+ song['variantId'] +'&type='+song['id_form_of_writing']+'}">'+song['name']+'</a></td>\n' +
+                        '       <td ><a >'+song['name_form_of_writing']+'</a></td></tr>';
+                    $('#songs-list').html(text);
+                }
+                if (data.length=0)
+                    $('#next-page').attr('page', page-1);
+            }
+        }).fail(function (e){
+            console.log(e);
+        });
+    })
+
     $('#type-header').change( function (){
         $.ajax({
             type: "GET",

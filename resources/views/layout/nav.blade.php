@@ -39,7 +39,7 @@
 
         <div class="footer">
             <p>
-                ©<script>document.write(new Date().getFullYear());</script> site.com All rights reserved
+                ©<script>document.write(new Date().getFullYear());</script> All rights reserved
             </p>
         </div>
 
@@ -75,7 +75,7 @@
                         <a class="nav-link" href="{{route('getSongPage')}}">Всі пісні</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Категорії</a>
+                        <a class="nav-link" href="{{route('getCategory')}}">Категорії</a>
                     </li>
                     <li>
                         <form class="d-flex" action="{{route('search')}}" method="post">

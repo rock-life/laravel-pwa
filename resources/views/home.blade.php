@@ -5,7 +5,16 @@
             <p class="text-center">{{$message}}</p>
         </div>
     @endif
-<h2 class="mb-4">Sidebar #01</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-@endsection()
+    <div class="container song-add-container">
+        <div class="content-song">
+            <div class="text">
+            <p>Ласкаво просимо до нашого музичного нотатника. Місця, де кожен музикан знайде щось до свого смаку, та необхідний розбір для свого інструменту, а саме: ноти, акорди та таби для гітари</p>
+            <p>Пропонуємо невелику екскурсію по сайті.</p>
+            <p>У розділі категорій відсортовані пісні відповідно категорій до якої вона належить, наприклад: рок, поп, народна музика, новорічні ...</p>
+            <p>У розділі виконавців впорядковані пісні відповідно до виконавця</p>
+            <p>У розділі всіх піснень можна переглянути список доступних пісень які відсортовані по даті публікації</p>
+            <p>У розділі додавання розбору можна запропонувати власний варіант розбору, а якщо додатково зареєструватись на сайті, можна отримати повний доступ до власного варіанту розбору</p>
+            <p>Також після реєстрації користувач може зберігати у власному списку вподобані розбори, щоб в подальшому їх зручно було шукати</p>
+            </div>
+        </div>
+    </div>@endsection()

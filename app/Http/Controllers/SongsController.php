@@ -55,7 +55,10 @@ class SongsController extends Controller
         $types = $this->form->getAll();
         $songDetail = $this->model->getVariantSong($id_song);
         $song = $songDetail['id_song'];
-        if ($songDetail['visibility'] == false && $songDetail['id_user'] == Auth::id()) {
+        if (Auth::user())
+            $role = Auth::user()->id_role;
+        else $role = 1;
+        if ($songDetail['visibility'] == false && $songDetail['id_user'] == Auth::id() || $role > 1) {
             $name = $song['name'];
             $artist = $song['id_artist'];
             $text = $songDetail['text'];
@@ -89,7 +92,10 @@ class SongsController extends Controller
         $types = $this->form->getAll();
         $songDetail = $this->model->getVariantSong($id_song, $id_song_variant, $type);
         $song = $songDetail['id_song'];
-        if ($songDetail['visibility'] == false && $songDetail['id_user'] == Auth::id() || Auth::user()->id_role > 1) {
+        if (Auth::user())
+        $role = Auth::user()->id_role;
+        else $role = 1;
+        if ($songDetail['visibility'] == false && $songDetail['id_user'] == Auth::id() || $role > 1) {
             $name = $song['name'];
             $artist = $song['id_artist'];
             $text = $songDetail['text'];
