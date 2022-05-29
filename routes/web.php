@@ -43,6 +43,7 @@ Route::group(['namespace'=>'App\Http\Controllers', 'middleware'=>['lang']], func
         Route::get('/get-save-song' ,[\App\Http\Controllers\SaveSongController::class, 'getSavedSong'])->name('getSavedSong');
         Route::get('/del-save-song', [\App\Http\Controllers\SaveSongController::class, 'delSavedSong'])->name('delSavedSong');
         Route::get('/my-added-song', [\App\Http\Controllers\SongsController::class, 'getMyAddedSong'])->name('getMyAddedSong');
+        Route::get('/my-added-song-ajax', [\App\Http\Controllers\SongsController::class, 'getMyAddedSongAjax'])->name('getMyAddedSongAjax');
         Route::get('/del-my-added-song', [\App\Http\Controllers\SongVariantController::class, 'delMyAddedSong'])->name('delMyAddedSong');
         Route::post('/edit-song', [\App\Http\Controllers\SongVariantController::class, 'editMyAddedSong'])->name('editMyAddedSong');
         Route::get('/edit-song-page/{id}', [\App\Http\Controllers\SongVariantController::class, 'editSongPage'])->name('editSongPage');

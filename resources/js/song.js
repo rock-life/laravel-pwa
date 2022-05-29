@@ -112,7 +112,6 @@
             console.log(e);
         });
     })
-    $('#type-header').change();
 
     $('#variant').change( function (){
         $.ajax({
@@ -570,40 +569,69 @@
     }, 1000, [speed]);
 
     $('#pre-page-manage').click(function (){
-        var pages = $('#next-page-manage').attr('page');
+        var pages = $('#next-page').attr('page');
         var page = parseInt(pages) - 1;
-        if (page > 0) {
-            $('#next-page-manage').attr('page', page);
+
+        if (page <= 0)
+            page = 0;
             $.ajax({
                 type: "GET",
-                url: '/mod-songs-page',
+                url: '/my-added-song-ajax',
                 data: {
-                    'page': $('#next-page-manage').attr('page')
+                    'page': page
                 },
             }).done(function (data) {
-                if (data.length > 0) {
-
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr><td>Виконавець</td><td width="50%">Пісня</td></tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        text +=' <tr>\n' +
+                            '                <td><a href="/song-artist/'+ song.artistId +'">' + song.nameArtist + '</a></td>\n' +
+                            '                <td width="50%" ><a href="/get_song/'+ song.Id +'">' + song.name + '</a></td>\n' +
+                            '               <td width="10%"><input type="button" className="form-control footer-action-button" id="delete" id_song="'+song.song_variantId+'" value="Видалити"/></td>' +
+                            '                <td width="10%"><a href="edit-song-page/' + song.song_variantId + '" class="form-control footer-action-button" id_song="' + song.song_variantId + '"> Редагувати </a></td>' +
+                            '            </tr>';
+                        $('#songs-list').html(text);
+                    }
+                    if (data.length<10)
+                        $('#next-page').attr('page', page-1);
                 }
+            }).fail(function (e){
+                console.log(e);
             });
-        }
     })
 
     $('#next-page-manage').click(function (){
-        var pages = $('#next-page-manage').attr('page');
+        var pages = $('#next-page').attr('page');
         var page = parseInt(pages) + 1;
-        $('#next-page-manage').attr('page', page);
 
-        $.ajax({
-            type: "GET",
-            url: '/mod-songs-page',
-            data: {
-                'page': $('#next-page-manage').attr('page')
-            },
-        }).done(function (data) {
-            if(data.length > 0) {
-
-            }
-        });
+        if (page > 0)
+            $.ajax({
+                type: "GET",
+                url: '/my-added-song-ajax',
+                data: {
+                    'page': page
+                },
+            }).done(function (data) {
+                if(data.length > 0) {
+                    $('#next-page').attr('page', page);
+                    var text = '<tr><td>Виконавець</td><td width="50%">Пісня</td></tr>';
+                    for(var i = 0; data.length>i; i++){
+                        var song = data[i];
+                        text +=' <tr>\n' +
+                            '                <td><a href="/song-artist/'+ song.artistId +'">' + song.nameArtist + '</a></td>\n' +
+                            '                <td width="50%" ><a href="/show-song/'+song.id +'/'+ song.song_variantId +'/'+ song.form_of_writingId +'">' + song.name + '</a></td>\n' +
+                            '                <td width="10%"><a href="edit-song-page/' + song.song_variantId + '" class="form-control footer-action-button" id_song="' + song.song_variantId + '"> Редагувати </a></td>' +
+                        '            </tr>';
+                        $('#songs-list').html(text);
+                    }
+                    if (data.length<10)
+                        $('#next-page').attr('page', page-1);
+                }
+            }).fail(function (e){
+                console.log(e);
+            });
     })
 
     $('#delete').click(function (){

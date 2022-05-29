@@ -143,6 +143,12 @@ class SongsController extends Controller
         $data = $this->model->getMyAddedSong();
         return view('my_added_song', ['result' => $data]);
     }
+    public function getMyAddedSongAjax(Request $request){
+        if ($request->ajax()) {
+            $data = $this->model->getMyAddedSong($request->get('page'));
+            return response($data);
+        }
+}
 
     public function search(Request $request){
         $song = $this->model->getSearchSongsFrom($request->get('search-value')) ;
